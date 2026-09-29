@@ -1,0 +1,2460 @@
+{
+"source": "force-aligned to media/song.wav (torchaudio CTC, wav2vec2 large); machine estimate",
+"lines": [
+{
+"text": "God remembered Noe,",
+"start": 15.921,
+"end": 17.621
+},
+{
+"text": "and every beast and bird,",
+"start": 20.121,
+"end": 22.301
+},
+{
+"text": "every herd and creeping thing",
+"start": 24.181,
+"end": 26.542
+},
+{
+"text": "that shared the ark with him.",
+"start": 27.602,
+"end": 29.922
+},
+{
+"text": "God sent a wind across the earth;",
+"start": 32.382,
+"end": 34.862
+},
+{
+"text": "the waters began to fall.",
+"start": 36.202,
+"end": 38.662
+},
+{
+"text": "The springs of the deep were closed,",
+"start": 40.442,
+"end": 43.023
+},
+{
+"text": "heaven\u2019s floodgates shut;",
+"start": 43.083,
+"end": 45.203
+},
+{
+"text": "the rain from heaven was held back.",
+"start": 47.603,
+"end": 50.103
+},
+{
+"text": "The waters ebbed from all the earth.",
+"start": 51.443,
+"end": 54.103
+},
+{
+"text": "After one hundred fifty days",
+"start": 55.103,
+"end": 58.203
+},
+{
+"text": "they had fallen; the ark came to rest,",
+"start": 58.363,
+"end": 63.864
+},
+{
+"text": "in month seven, day twenty-seven,",
+"start": 64.824,
+"end": 67.304
+},
+{
+"text": "on Ararat\u2019s mountains.",
+"start": 68.224,
+"end": 70.504
+},
+{
+"text": "The waters kept on falling",
+"start": 70.684,
+"end": 74.064
+},
+{
+"text": "until the tenth month.",
+"start": 74.364,
+"end": 75.804
+},
+{
+"text": "On the first day of month ten,",
+"start": 76.564,
+"end": 79.5
+},
+{
+"text": "the mountain peaks came into view.",
+"start": 92.725,
+"end": 95.566
+},
+{
+"text": "After forty days, Noe opened",
+"start": 96.346,
+"end": 98.626
+},
+{
+"text": "the window he had made in the ark.",
+"start": 100.766,
+"end": 103.266
+},
+{
+"text": "He sent a raven out;",
+"start": 103.566,
+"end": 104.966
+},
+{
+"text": "it flew until the earth was dry,",
+"start": 106.206,
+"end": 109.086
+},
+{
+"text": "and did not come back.",
+"start": 109.146,
+"end": 112.687
+},
+{
+"text": "Then he sent a dove to learn",
+"start": 114.707,
+"end": 116.747
+},
+{
+"text": "if waters had withdrawn from earth.",
+"start": 118.327,
+"end": 120.347
+},
+{
+"text": "The dove found no place to rest;",
+"start": 122.047,
+"end": 124.547
+},
+{
+"text": "water still covered all the earth.",
+"start": 125.087,
+"end": 127.807
+},
+{
+"text": "She came back to Noe in the ark.",
+"start": 129.108,
+"end": 131.808
+},
+{
+"text": "He reached and drew her in,",
+"start": 133.388,
+"end": 135.708
+},
+{
+"text": "held her close inside.",
+"start": 136.448,
+"end": 139.308
+},
+{
+"text": "He waited seven more days,",
+"start": 140.028,
+"end": 142.908
+},
+{
+"text": "then sent the dove out again.",
+"start": 144.268,
+"end": 149.909
+},
+{
+"text": "At evening she came back,",
+"start": 152.849,
+"end": 154.549
+},
+{
+"text": "an olive leaf held in her beak.",
+"start": 156.149,
+"end": 158.209
+},
+{
+"text": "Noe knew the waters had withdrawn.",
+"start": 159.609,
+"end": 162.329
+},
+{
+"text": "He waited seven more days,",
+"start": 163.19,
+"end": 165.43
+},
+{
+"text": "then sent the dove out once more.",
+"start": 165.53,
+"end": 169.07
+},
+{
+"text": "She did not return again.",
+"start": 169.45,
+"end": 173.05
+},
+{
+"text": "In Noe\u2019s six hundred first year,",
+"start": 174.55,
+"end": 176.93
+},
+{
+"text": "first month, the first day,",
+"start": 178.49,
+"end": 180.711
+},
+{
+"text": "the waters had ebbed from earth.",
+"start": 181.651,
+"end": 194.031
+},
+{
+"text": "Noe opened the ark\u2019s covering",
+"start": 195.071,
+"end": 200.492
+},
+{
+"text": "and saw the ground was dry.",
+"start": 201.572,
+"end": 203.872
+},
+{
+"text": "In month two, on day twenty-seven,",
+"start": 204.052,
+"end": 207.632
+},
+{
+"text": "the earth was dry.",
+"start": 209.112,
+"end": 211.152
+},
+{
+"text": "The Lord God spoke to Noe:",
+"start": 212.852,
+"end": 215.073
+},
+{
+"text": "\u201cCome out of the ark,",
+"start": 221.333,
+"end": 222.653
+},
+{
+"text": "you, your wife, your sons,",
+"start": 223.473,
+"end": 226.033
+},
+{
+"text": "and your sons\u2019 wives with you.",
+"start": 226.153,
+"end": 228.173
+},
+{
+"text": "Bring out every creature with you:",
+"start": 229.153,
+"end": 231.694
+},
+{
+"text": "birds, beasts, all living flesh,",
+"start": 232.454,
+"end": 235.774
+},
+{
+"text": "everything that crawls on earth.",
+"start": 235.914,
+"end": 237.974
+},
+{
+"text": "Let them teem and multiply;",
+"start": 239.074,
+"end": 241.394
+},
+{
+"text": "let them fill the earth.\u201d",
+"start": 241.474,
+"end": 245.294
+},
+{
+"text": "Noe came out with his wife,",
+"start": 245.634,
+"end": 250.155
+},
+{
+"text": "his sons and their wives.",
+"start": 250.235,
+"end": 252.095
+},
+{
+"text": "Every beast and herd,",
+"start": 252.235,
+"end": 253.915
+},
+{
+"text": "every bird and creeping thing,",
+"start": 254.115,
+"end": 256.315
+},
+{
+"text": "each by its kind,",
+"start": 256.455,
+"end": 257.935
+},
+{
+"text": "came out of the ark.",
+"start": 258.195,
+"end": 259.435
+},
+{
+"text": "Noe built an altar to the Lord.",
+"start": 259.875,
+"end": 264.175
+},
+{
+"text": "From every clean beast and bird",
+"start": 264.195,
+"end": 267.236
+},
+{
+"text": "he offered whole burnt offerings.",
+"start": 267.316,
+"end": 269.596
+},
+{
+"text": "The Lord God received the pleasing scent",
+"start": 270.536,
+"end": 274.076
+},
+{
+"text": "and said within himself:",
+"start": 275.156,
+"end": 277.416
+},
+{
+"text": "\u201cI will not curse the earth again",
+"start": 278.056,
+"end": 281.376
+},
+{
+"text": "for what humanity has done.",
+"start": 282.336,
+"end": 284.757
+},
+{
+"text": "The human heart leans toward evil",
+"start": 286.117,
+"end": 288.517
+},
+{
+"text": "even from youth.",
+"start": 289.757,
+"end": 293.197
+},
+{
+"text": "I will not strike down all life again",
+"start": 293.337,
+"end": 297.957
+},
+{
+"text": "as I have done.\u201d",
+"start": 300.878,
+"end": 302.798
+},
+{
+"text": "All earth\u2019s days shall keep their rhythm:",
+"start": 304.678,
+"end": 311.778
+},
+{
+"text": "seedtime, harvest, cold and heat,",
+"start": 314.158,
+"end": 320.739
+},
+{
+"text": "summer, spring, day and night\u2014",
+"start": 320.839,
+"end": 324.659
+},
+{
+"text": "none shall cease.\u201d",
+"start": 326.779,
+"end": 329.019
+}
+],
+"words": [
+{
+"w": "God",
+"start": 15.921,
+"end": 16.521
+},
+{
+"w": "remembered",
+"start": 16.681,
+"end": 17.481
+},
+{
+"w": "Noe,",
+"start": 17.541,
+"end": 17.621
+},
+{
+"w": "and",
+"start": 20.121,
+"end": 20.221
+},
+{
+"w": "every",
+"start": 20.401,
+"end": 20.621
+},
+{
+"w": "beast",
+"start": 20.721,
+"end": 21.281
+},
+{
+"w": "and",
+"start": 21.601,
+"end": 21.741
+},
+{
+"w": "bird,",
+"start": 21.961,
+"end": 22.301
+},
+{
+"w": "every",
+"start": 24.181,
+"end": 24.421
+},
+{
+"w": "herd",
+"start": 24.541,
+"end": 25.021
+},
+{
+"w": "and",
+"start": 25.121,
+"end": 25.261
+},
+{
+"w": "creeping",
+"start": 25.381,
+"end": 26.002
+},
+{
+"w": "thing",
+"start": 26.142,
+"end": 26.542
+},
+{
+"w": "that",
+"start": 27.602,
+"end": 27.702
+},
+{
+"w": "shared",
+"start": 27.782,
+"end": 28.542
+},
+{
+"w": "the",
+"start": 28.622,
+"end": 28.762
+},
+{
+"w": "ark",
+"start": 28.962,
+"end": 29.122
+},
+{
+"w": "with",
+"start": 29.502,
+"end": 29.662
+},
+{
+"w": "him.",
+"start": 29.702,
+"end": 29.922
+},
+{
+"w": "God",
+"start": 32.382,
+"end": 32.702
+},
+{
+"w": "sent",
+"start": 32.802,
+"end": 33.022
+},
+{
+"w": "a",
+"start": 33.082,
+"end": 33.102
+},
+{
+"w": "wind",
+"start": 33.202,
+"end": 33.602
+},
+{
+"w": "across",
+"start": 33.722,
+"end": 34.182
+},
+{
+"w": "the",
+"start": 34.302,
+"end": 34.462
+},
+{
+"w": "earth;",
+"start": 34.662,
+"end": 34.862
+},
+{
+"w": "the",
+"start": 36.202,
+"end": 36.302
+},
+{
+"w": "waters",
+"start": 36.402,
+"end": 37.262
+},
+{
+"w": "began",
+"start": 37.382,
+"end": 37.962
+},
+{
+"w": "to",
+"start": 38.062,
+"end": 38.142
+},
+{
+"w": "fall.",
+"start": 38.222,
+"end": 38.662
+},
+{
+"w": "The",
+"start": 40.442,
+"end": 40.522
+},
+{
+"w": "springs",
+"start": 40.602,
+"end": 41.182
+},
+{
+"w": "of",
+"start": 41.322,
+"end": 41.382
+},
+{
+"w": "the",
+"start": 41.482,
+"end": 41.562
+},
+{
+"w": "deep",
+"start": 41.662,
+"end": 41.982
+},
+{
+"w": "were",
+"start": 42.122,
+"end": 42.242
+},
+{
+"w": "closed,",
+"start": 42.302,
+"end": 43.023
+},
+{
+"w": "heaven\u2019s",
+"start": 43.083,
+"end": 43.603
+},
+{
+"w": "floodgates",
+"start": 43.763,
+"end": 44.643
+},
+{
+"w": "shut;",
+"start": 44.863,
+"end": 45.203
+},
+{
+"w": "the",
+"start": 47.603,
+"end": 47.743
+},
+{
+"w": "rain",
+"start": 47.843,
+"end": 48.023
+},
+{
+"w": "from",
+"start": 48.103,
+"end": 48.263
+},
+{
+"w": "heaven",
+"start": 48.363,
+"end": 48.883
+},
+{
+"w": "was",
+"start": 49.103,
+"end": 49.183
+},
+{
+"w": "held",
+"start": 49.223,
+"end": 49.643
+},
+{
+"w": "back.",
+"start": 49.743,
+"end": 50.103
+},
+{
+"w": "The",
+"start": 51.443,
+"end": 51.543
+},
+{
+"w": "waters",
+"start": 51.643,
+"end": 52.123
+},
+{
+"w": "ebbed",
+"start": 52.283,
+"end": 52.743
+},
+{
+"w": "from",
+"start": 52.843,
+"end": 53.023
+},
+{
+"w": "all",
+"start": 53.423,
+"end": 53.563
+},
+{
+"w": "the",
+"start": 53.583,
+"end": 53.783
+},
+{
+"w": "earth.",
+"start": 53.883,
+"end": 54.103
+},
+{
+"w": "After",
+"start": 55.103,
+"end": 55.443
+},
+{
+"w": "one",
+"start": 55.703,
+"end": 55.883
+},
+{
+"w": "hundred",
+"start": 55.963,
+"end": 56.783
+},
+{
+"w": "fifty",
+"start": 56.923,
+"end": 57.323
+},
+{
+"w": "days",
+"start": 57.403,
+"end": 58.203
+},
+{
+"w": "they",
+"start": 58.363,
+"end": 58.723
+},
+{
+"w": "had",
+"start": 59.023,
+"end": 59.303
+},
+{
+"w": "fallen;",
+"start": 59.483,
+"end": 59.823
+},
+{
+"w": "the",
+"start": 62.364,
+"end": 62.524
+},
+{
+"w": "ark",
+"start": 62.744,
+"end": 62.884
+},
+{
+"w": "came",
+"start": 63.004,
+"end": 63.304
+},
+{
+"w": "to",
+"start": 63.344,
+"end": 63.484
+},
+{
+"w": "rest,",
+"start": 63.584,
+"end": 63.864
+},
+{
+"w": "in",
+"start": 64.824,
+"end": 64.864
+},
+{
+"w": "month",
+"start": 64.984,
+"end": 65.244
+},
+{
+"w": "seven,",
+"start": 65.404,
+"end": 65.844
+},
+{
+"w": "day",
+"start": 65.944,
+"end": 66.204
+},
+{
+"w": "twenty-seven,",
+"start": 66.364,
+"end": 67.304
+},
+{
+"w": "on",
+"start": 68.224,
+"end": 68.284
+},
+{
+"w": "Ararat\u2019s",
+"start": 68.504,
+"end": 69.104
+},
+{
+"w": "mountains.",
+"start": 69.284,
+"end": 70.504
+},
+{
+"w": "The",
+"start": 70.684,
+"end": 70.844
+},
+{
+"w": "waters",
+"start": 70.964,
+"end": 71.764
+},
+{
+"w": "kept",
+"start": 71.904,
+"end": 72.404
+},
+{
+"w": "on",
+"start": 72.544,
+"end": 72.584
+},
+{
+"w": "falling",
+"start": 72.844,
+"end": 74.064
+},
+{
+"w": "until",
+"start": 74.364,
+"end": 74.684
+},
+{
+"w": "the",
+"start": 74.784,
+"end": 74.864
+},
+{
+"w": "tenth",
+"start": 74.944,
+"end": 75.304
+},
+{
+"w": "month.",
+"start": 75.424,
+"end": 75.804
+},
+{
+"w": "On",
+"start": 76.564,
+"end": 76.624
+},
+{
+"w": "the",
+"start": 76.664,
+"end": 76.724
+},
+{
+"w": "first",
+"start": 76.824,
+"end": 77.185
+},
+{
+"w": "day",
+"start": 77.365,
+"end": 77.885
+},
+{
+"w": "of",
+"start": 77.88,
+"end": 77.98
+},
+{
+"w": "month",
+"start": 78.0,
+"end": 78.45
+},
+{
+"w": "ten,",
+"start": 78.5,
+"end": 79.5
+},
+{
+"w": "the",
+"start": 92.725,
+"end": 92.825
+},
+{
+"w": "mountain",
+"start": 92.965,
+"end": 93.545
+},
+{
+"w": "peaks",
+"start": 93.665,
+"end": 94.226
+},
+{
+"w": "came",
+"start": 94.366,
+"end": 94.826
+},
+{
+"w": "into",
+"start": 94.946,
+"end": 95.166
+},
+{
+"w": "view.",
+"start": 95.306,
+"end": 95.566
+},
+{
+"w": "After",
+"start": 96.346,
+"end": 96.606
+},
+{
+"w": "forty",
+"start": 96.686,
+"end": 97.146
+},
+{
+"w": "days,",
+"start": 97.246,
+"end": 98.066
+},
+{
+"w": "Noe",
+"start": 98.186,
+"end": 98.466
+},
+{
+"w": "opened",
+"start": 98.486,
+"end": 98.626
+},
+{
+"w": "the",
+"start": 100.766,
+"end": 100.866
+},
+{
+"w": "window",
+"start": 100.966,
+"end": 101.426
+},
+{
+"w": "he",
+"start": 101.546,
+"end": 101.686
+},
+{
+"w": "had",
+"start": 101.766,
+"end": 101.846
+},
+{
+"w": "made",
+"start": 101.946,
+"end": 102.446
+},
+{
+"w": "in",
+"start": 102.526,
+"end": 102.606
+},
+{
+"w": "the",
+"start": 102.666,
+"end": 102.826
+},
+{
+"w": "ark.",
+"start": 103.086,
+"end": 103.266
+},
+{
+"w": "He",
+"start": 103.566,
+"end": 103.686
+},
+{
+"w": "sent",
+"start": 103.806,
+"end": 104.186
+},
+{
+"w": "a",
+"start": 104.246,
+"end": 104.266
+},
+{
+"w": "raven",
+"start": 104.306,
+"end": 104.726
+},
+{
+"w": "out;",
+"start": 104.886,
+"end": 104.966
+},
+{
+"w": "it",
+"start": 106.206,
+"end": 106.986
+},
+{
+"w": "flew",
+"start": 107.066,
+"end": 107.406
+},
+{
+"w": "until",
+"start": 107.466,
+"end": 107.806
+},
+{
+"w": "the",
+"start": 107.886,
+"end": 108.026
+},
+{
+"w": "earth",
+"start": 108.266,
+"end": 108.466
+},
+{
+"w": "was",
+"start": 108.566,
+"end": 108.686
+},
+{
+"w": "dry,",
+"start": 108.806,
+"end": 109.086
+},
+{
+"w": "and",
+"start": 109.146,
+"end": 109.346
+},
+{
+"w": "did",
+"start": 110.926,
+"end": 111.086
+},
+{
+"w": "not",
+"start": 111.206,
+"end": 111.447
+},
+{
+"w": "come",
+"start": 111.547,
+"end": 111.887
+},
+{
+"w": "back.",
+"start": 112.347,
+"end": 112.687
+},
+{
+"w": "Then",
+"start": 114.707,
+"end": 114.967
+},
+{
+"w": "he",
+"start": 115.007,
+"end": 115.047
+},
+{
+"w": "sent",
+"start": 115.147,
+"end": 115.447
+},
+{
+"w": "a",
+"start": 115.507,
+"end": 115.527
+},
+{
+"w": "dove",
+"start": 115.647,
+"end": 116.087
+},
+{
+"w": "to",
+"start": 116.147,
+"end": 116.247
+},
+{
+"w": "learn",
+"start": 116.367,
+"end": 116.747
+},
+{
+"w": "if",
+"start": 118.327,
+"end": 118.367
+},
+{
+"w": "waters",
+"start": 118.487,
+"end": 118.907
+},
+{
+"w": "had",
+"start": 118.987,
+"end": 119.167
+},
+{
+"w": "withdrawn",
+"start": 119.227,
+"end": 119.767
+},
+{
+"w": "from",
+"start": 119.947,
+"end": 120.107
+},
+{
+"w": "earth.",
+"start": 120.167,
+"end": 120.347
+},
+{
+"w": "The",
+"start": 122.047,
+"end": 122.147
+},
+{
+"w": "dove",
+"start": 122.267,
+"end": 122.587
+},
+{
+"w": "found",
+"start": 122.687,
+"end": 123.187
+},
+{
+"w": "no",
+"start": 123.247,
+"end": 123.387
+},
+{
+"w": "place",
+"start": 123.507,
+"end": 123.867
+},
+{
+"w": "to",
+"start": 123.947,
+"end": 124.067
+},
+{
+"w": "rest;",
+"start": 124.187,
+"end": 124.547
+},
+{
+"w": "water",
+"start": 125.087,
+"end": 125.567
+},
+{
+"w": "still",
+"start": 125.747,
+"end": 125.987
+},
+{
+"w": "covered",
+"start": 126.067,
+"end": 126.787
+},
+{
+"w": "all",
+"start": 127.027,
+"end": 127.247
+},
+{
+"w": "the",
+"start": 127.267,
+"end": 127.447
+},
+{
+"w": "earth.",
+"start": 127.627,
+"end": 127.807
+},
+{
+"w": "She",
+"start": 129.108,
+"end": 129.208
+},
+{
+"w": "came",
+"start": 129.308,
+"end": 129.748
+},
+{
+"w": "back",
+"start": 129.828,
+"end": 130.188
+},
+{
+"w": "to",
+"start": 130.288,
+"end": 130.408
+},
+{
+"w": "Noe",
+"start": 130.568,
+"end": 131.088
+},
+{
+"w": "in",
+"start": 131.128,
+"end": 131.208
+},
+{
+"w": "the",
+"start": 131.308,
+"end": 131.408
+},
+{
+"w": "ark.",
+"start": 131.688,
+"end": 131.808
+},
+{
+"w": "He",
+"start": 133.388,
+"end": 133.488
+},
+{
+"w": "reached",
+"start": 133.608,
+"end": 134.048
+},
+{
+"w": "and",
+"start": 134.268,
+"end": 134.508
+},
+{
+"w": "drew",
+"start": 134.548,
+"end": 134.828
+},
+{
+"w": "her",
+"start": 134.928,
+"end": 135.448
+},
+{
+"w": "in,",
+"start": 135.628,
+"end": 135.708
+},
+{
+"w": "held",
+"start": 136.448,
+"end": 136.928
+},
+{
+"w": "her",
+"start": 136.968,
+"end": 137.228
+},
+{
+"w": "close",
+"start": 137.408,
+"end": 138.008
+},
+{
+"w": "inside.",
+"start": 138.288,
+"end": 139.308
+},
+{
+"w": "He",
+"start": 140.028,
+"end": 140.088
+},
+{
+"w": "waited",
+"start": 140.208,
+"end": 140.708
+},
+{
+"w": "seven",
+"start": 140.888,
+"end": 141.348
+},
+{
+"w": "more",
+"start": 141.608,
+"end": 142.008
+},
+{
+"w": "days,",
+"start": 142.108,
+"end": 142.908
+},
+{
+"w": "then",
+"start": 144.268,
+"end": 144.348
+},
+{
+"w": "sent",
+"start": 144.408,
+"end": 144.648
+},
+{
+"w": "the",
+"start": 144.708,
+"end": 144.788
+},
+{
+"w": "dove",
+"start": 144.928,
+"end": 146.069
+},
+{
+"w": "out",
+"start": 147.969,
+"end": 149.249
+},
+{
+"w": "again.",
+"start": 149.529,
+"end": 149.909
+},
+{
+"w": "At",
+"start": 152.849,
+"end": 152.949
+},
+{
+"w": "evening",
+"start": 153.109,
+"end": 153.329
+},
+{
+"w": "she",
+"start": 153.409,
+"end": 153.589
+},
+{
+"w": "came",
+"start": 153.689,
+"end": 154.049
+},
+{
+"w": "back,",
+"start": 154.169,
+"end": 154.549
+},
+{
+"w": "an",
+"start": 156.149,
+"end": 156.189
+},
+{
+"w": "olive",
+"start": 156.429,
+"end": 156.709
+},
+{
+"w": "leaf",
+"start": 156.809,
+"end": 157.089
+},
+{
+"w": "held",
+"start": 157.169,
+"end": 157.489
+},
+{
+"w": "in",
+"start": 157.649,
+"end": 157.689
+},
+{
+"w": "her",
+"start": 157.729,
+"end": 157.869
+},
+{
+"w": "beak.",
+"start": 157.969,
+"end": 158.209
+},
+{
+"w": "Noe",
+"start": 159.609,
+"end": 159.989
+},
+{
+"w": "knew",
+"start": 160.049,
+"end": 160.229
+},
+{
+"w": "the",
+"start": 160.309,
+"end": 160.429
+},
+{
+"w": "waters",
+"start": 160.529,
+"end": 160.969
+},
+{
+"w": "had",
+"start": 161.009,
+"end": 161.469
+},
+{
+"w": "withdrawn.",
+"start": 161.529,
+"end": 162.329
+},
+{
+"w": "He",
+"start": 163.19,
+"end": 163.29
+},
+{
+"w": "waited",
+"start": 163.39,
+"end": 163.75
+},
+{
+"w": "seven",
+"start": 163.83,
+"end": 164.23
+},
+{
+"w": "more",
+"start": 164.33,
+"end": 164.75
+},
+{
+"w": "days,",
+"start": 164.83,
+"end": 165.43
+},
+{
+"w": "then",
+"start": 165.53,
+"end": 165.75
+},
+{
+"w": "sent",
+"start": 165.99,
+"end": 166.37
+},
+{
+"w": "the",
+"start": 166.47,
+"end": 166.59
+},
+{
+"w": "dove",
+"start": 166.69,
+"end": 167.01
+},
+{
+"w": "out",
+"start": 167.45,
+"end": 167.65
+},
+{
+"w": "once",
+"start": 168.25,
+"end": 168.39
+},
+{
+"w": "more.",
+"start": 168.57,
+"end": 169.07
+},
+{
+"w": "She",
+"start": 169.45,
+"end": 169.89
+},
+{
+"w": "did",
+"start": 170.47,
+"end": 171.37
+},
+{
+"w": "not",
+"start": 171.43,
+"end": 171.65
+},
+{
+"w": "return",
+"start": 172.09,
+"end": 172.61
+},
+{
+"w": "again.",
+"start": 172.69,
+"end": 173.05
+},
+{
+"w": "In",
+"start": 174.55,
+"end": 174.61
+},
+{
+"w": "Noe\u2019s",
+"start": 174.73,
+"end": 175.01
+},
+{
+"w": "six",
+"start": 175.15,
+"end": 175.39
+},
+{
+"w": "hundred",
+"start": 175.67,
+"end": 176.03
+},
+{
+"w": "first",
+"start": 176.11,
+"end": 176.55
+},
+{
+"w": "year,",
+"start": 176.65,
+"end": 176.93
+},
+{
+"w": "first",
+"start": 178.49,
+"end": 178.81
+},
+{
+"w": "month,",
+"start": 178.97,
+"end": 179.27
+},
+{
+"w": "the",
+"start": 179.69,
+"end": 179.791
+},
+{
+"w": "first",
+"start": 179.911,
+"end": 180.271
+},
+{
+"w": "day,",
+"start": 180.391,
+"end": 180.711
+},
+{
+"w": "the",
+"start": 181.651,
+"end": 181.731
+},
+{
+"w": "waters",
+"start": 181.831,
+"end": 182.311
+},
+{
+"w": "had",
+"start": 182.391,
+"end": 182.831
+},
+{
+"w": "ebbed",
+"start": 183.051,
+"end": 187.611
+},
+{
+"w": "from",
+"start": 187.651,
+"end": 189.911
+},
+{
+"w": "earth.",
+"start": 191.311,
+"end": 194.031
+},
+{
+"w": "Noe",
+"start": 195.071,
+"end": 197.792
+},
+{
+"w": "opened",
+"start": 198.072,
+"end": 198.592
+},
+{
+"w": "the",
+"start": 198.672,
+"end": 198.832
+},
+{
+"w": "ark\u2019s",
+"start": 199.192,
+"end": 199.452
+},
+{
+"w": "covering",
+"start": 199.572,
+"end": 200.492
+},
+{
+"w": "and",
+"start": 201.572,
+"end": 201.632
+},
+{
+"w": "saw",
+"start": 201.712,
+"end": 202.152
+},
+{
+"w": "the",
+"start": 202.272,
+"end": 202.352
+},
+{
+"w": "ground",
+"start": 202.432,
+"end": 202.952
+},
+{
+"w": "was",
+"start": 202.972,
+"end": 203.332
+},
+{
+"w": "dry.",
+"start": 203.412,
+"end": 203.872
+},
+{
+"w": "In",
+"start": 204.052,
+"end": 204.252
+},
+{
+"w": "month",
+"start": 204.332,
+"end": 204.652
+},
+{
+"w": "two,",
+"start": 205.052,
+"end": 205.312
+},
+{
+"w": "on",
+"start": 205.872,
+"end": 205.932
+},
+{
+"w": "day",
+"start": 206.012,
+"end": 206.352
+},
+{
+"w": "twenty-seven,",
+"start": 206.432,
+"end": 207.632
+},
+{
+"w": "the",
+"start": 209.112,
+"end": 209.272
+},
+{
+"w": "earth",
+"start": 209.532,
+"end": 209.812
+},
+{
+"w": "was",
+"start": 210.012,
+"end": 210.332
+},
+{
+"w": "dry.",
+"start": 210.652,
+"end": 211.152
+},
+{
+"w": "The",
+"start": 212.852,
+"end": 212.992
+},
+{
+"w": "Lord",
+"start": 213.072,
+"end": 213.452
+},
+{
+"w": "God",
+"start": 213.532,
+"end": 214.013
+},
+{
+"w": "spoke",
+"start": 214.153,
+"end": 214.533
+},
+{
+"w": "to",
+"start": 214.733,
+"end": 214.793
+},
+{
+"w": "Noe:",
+"start": 214.913,
+"end": 215.073
+},
+{
+"w": "\u201cCome",
+"start": 221.333,
+"end": 221.533
+},
+{
+"w": "out",
+"start": 221.753,
+"end": 221.873
+},
+{
+"w": "of",
+"start": 221.973,
+"end": 222.013
+},
+{
+"w": "the",
+"start": 222.093,
+"end": 222.233
+},
+{
+"w": "ark,",
+"start": 222.533,
+"end": 222.653
+},
+{
+"w": "you,",
+"start": 223.473,
+"end": 223.673
+},
+{
+"w": "your",
+"start": 224.173,
+"end": 224.373
+},
+{
+"w": "wife,",
+"start": 224.453,
+"end": 224.833
+},
+{
+"w": "your",
+"start": 225.113,
+"end": 225.253
+},
+{
+"w": "sons,",
+"start": 225.333,
+"end": 226.033
+},
+{
+"w": "and",
+"start": 226.153,
+"end": 226.233
+},
+{
+"w": "your",
+"start": 226.313,
+"end": 226.573
+},
+{
+"w": "sons\u2019",
+"start": 226.753,
+"end": 227.213
+},
+{
+"w": "wives",
+"start": 227.273,
+"end": 227.733
+},
+{
+"w": "with",
+"start": 227.793,
+"end": 227.933
+},
+{
+"w": "you.",
+"start": 228.013,
+"end": 228.173
+},
+{
+"w": "Bring",
+"start": 229.153,
+"end": 229.373
+},
+{
+"w": "out",
+"start": 229.533,
+"end": 229.633
+},
+{
+"w": "every",
+"start": 229.773,
+"end": 229.993
+},
+{
+"w": "creature",
+"start": 230.093,
+"end": 230.913
+},
+{
+"w": "with",
+"start": 231.053,
+"end": 231.354
+},
+{
+"w": "you:",
+"start": 231.494,
+"end": 231.694
+},
+{
+"w": "birds,",
+"start": 232.454,
+"end": 232.974
+},
+{
+"w": "beasts,",
+"start": 233.154,
+"end": 233.614
+},
+{
+"w": "all",
+"start": 234.114,
+"end": 234.294
+},
+{
+"w": "living",
+"start": 234.374,
+"end": 234.814
+},
+{
+"w": "flesh,",
+"start": 235.214,
+"end": 235.774
+},
+{
+"w": "everything",
+"start": 235.914,
+"end": 236.434
+},
+{
+"w": "that",
+"start": 236.494,
+"end": 236.594
+},
+{
+"w": "crawls",
+"start": 236.634,
+"end": 237.174
+},
+{
+"w": "on",
+"start": 237.474,
+"end": 237.574
+},
+{
+"w": "earth.",
+"start": 237.814,
+"end": 237.974
+},
+{
+"w": "Let",
+"start": 239.074,
+"end": 239.214
+},
+{
+"w": "them",
+"start": 239.294,
+"end": 239.434
+},
+{
+"w": "teem",
+"start": 239.554,
+"end": 240.014
+},
+{
+"w": "and",
+"start": 240.114,
+"end": 240.194
+},
+{
+"w": "multiply;",
+"start": 240.274,
+"end": 241.394
+},
+{
+"w": "let",
+"start": 241.474,
+"end": 243.454
+},
+{
+"w": "them",
+"start": 243.534,
+"end": 243.794
+},
+{
+"w": "fill",
+"start": 243.954,
+"end": 244.434
+},
+{
+"w": "the",
+"start": 244.494,
+"end": 244.654
+},
+{
+"w": "earth.\u201d",
+"start": 244.894,
+"end": 245.294
+},
+{
+"w": "Noe",
+"start": 245.634,
+"end": 248.415
+},
+{
+"w": "came",
+"start": 248.515,
+"end": 248.755
+},
+{
+"w": "out",
+"start": 248.935,
+"end": 249.075
+},
+{
+"w": "with",
+"start": 249.275,
+"end": 249.475
+},
+{
+"w": "his",
+"start": 249.535,
+"end": 249.655
+},
+{
+"w": "wife,",
+"start": 249.735,
+"end": 250.155
+},
+{
+"w": "his",
+"start": 250.235,
+"end": 250.395
+},
+{
+"w": "sons",
+"start": 250.635,
+"end": 251.115
+},
+{
+"w": "and",
+"start": 251.215,
+"end": 251.315
+},
+{
+"w": "their",
+"start": 251.375,
+"end": 251.555
+},
+{
+"w": "wives.",
+"start": 251.615,
+"end": 252.095
+},
+{
+"w": "Every",
+"start": 252.235,
+"end": 252.475
+},
+{
+"w": "beast",
+"start": 252.555,
+"end": 252.895
+},
+{
+"w": "and",
+"start": 253.215,
+"end": 253.395
+},
+{
+"w": "herd,",
+"start": 253.475,
+"end": 253.915
+},
+{
+"w": "every",
+"start": 254.115,
+"end": 254.355
+},
+{
+"w": "bird",
+"start": 254.435,
+"end": 254.915
+},
+{
+"w": "and",
+"start": 254.975,
+"end": 255.075
+},
+{
+"w": "creeping",
+"start": 255.115,
+"end": 255.555
+},
+{
+"w": "thing,",
+"start": 255.615,
+"end": 256.315
+},
+{
+"w": "each",
+"start": 256.455,
+"end": 256.655
+},
+{
+"w": "by",
+"start": 256.775,
+"end": 257.035
+},
+{
+"w": "its",
+"start": 257.175,
+"end": 257.295
+},
+{
+"w": "kind,",
+"start": 257.435,
+"end": 257.935
+},
+{
+"w": "came",
+"start": 258.195,
+"end": 258.435
+},
+{
+"w": "out",
+"start": 258.655,
+"end": 258.735
+},
+{
+"w": "of",
+"start": 258.815,
+"end": 258.935
+},
+{
+"w": "the",
+"start": 258.975,
+"end": 259.095
+},
+{
+"w": "ark.",
+"start": 259.355,
+"end": 259.435
+},
+{
+"w": "Noe",
+"start": 259.875,
+"end": 261.015
+},
+{
+"w": "built",
+"start": 261.055,
+"end": 261.555
+},
+{
+"w": "an",
+"start": 261.715,
+"end": 261.815
+},
+{
+"w": "altar",
+"start": 262.255,
+"end": 262.715
+},
+{
+"w": "to",
+"start": 262.975,
+"end": 263.135
+},
+{
+"w": "the",
+"start": 263.235,
+"end": 263.335
+},
+{
+"w": "Lord.",
+"start": 263.675,
+"end": 264.175
+},
+{
+"w": "From",
+"start": 264.195,
+"end": 264.315
+},
+{
+"w": "every",
+"start": 264.375,
+"end": 264.575
+},
+{
+"w": "clean",
+"start": 264.615,
+"end": 265.235
+},
+{
+"w": "beast",
+"start": 265.776,
+"end": 266.276
+},
+{
+"w": "and",
+"start": 266.616,
+"end": 266.676
+},
+{
+"w": "bird",
+"start": 266.736,
+"end": 267.236
+},
+{
+"w": "he",
+"start": 267.316,
+"end": 267.376
+},
+{
+"w": "offered",
+"start": 267.576,
+"end": 267.856
+},
+{
+"w": "whole",
+"start": 267.916,
+"end": 268.336
+},
+{
+"w": "burnt",
+"start": 268.376,
+"end": 268.856
+},
+{
+"w": "offerings.",
+"start": 268.956,
+"end": 269.596
+},
+{
+"w": "The",
+"start": 270.536,
+"end": 270.636
+},
+{
+"w": "Lord",
+"start": 270.756,
+"end": 271.136
+},
+{
+"w": "God",
+"start": 271.216,
+"end": 271.736
+},
+{
+"w": "received",
+"start": 271.916,
+"end": 272.696
+},
+{
+"w": "the",
+"start": 272.856,
+"end": 272.936
+},
+{
+"w": "pleasing",
+"start": 273.036,
+"end": 273.576
+},
+{
+"w": "scent",
+"start": 273.756,
+"end": 274.076
+},
+{
+"w": "and",
+"start": 275.156,
+"end": 275.336
+},
+{
+"w": "said",
+"start": 275.436,
+"end": 275.936
+},
+{
+"w": "within",
+"start": 276.156,
+"end": 276.676
+},
+{
+"w": "himself:",
+"start": 276.796,
+"end": 277.416
+},
+{
+"w": "\u201cI",
+"start": 278.056,
+"end": 278.076
+},
+{
+"w": "will",
+"start": 278.296,
+"end": 278.496
+},
+{
+"w": "not",
+"start": 278.556,
+"end": 279.016
+},
+{
+"w": "curse",
+"start": 279.196,
+"end": 279.816
+},
+{
+"w": "the",
+"start": 279.956,
+"end": 280.136
+},
+{
+"w": "earth",
+"start": 280.336,
+"end": 280.916
+},
+{
+"w": "again",
+"start": 280.996,
+"end": 281.376
+},
+{
+"w": "for",
+"start": 282.336,
+"end": 282.476
+},
+{
+"w": "what",
+"start": 282.557,
+"end": 282.717
+},
+{
+"w": "humanity",
+"start": 282.797,
+"end": 283.777
+},
+{
+"w": "has",
+"start": 284.017,
+"end": 284.277
+},
+{
+"w": "done.",
+"start": 284.457,
+"end": 284.757
+},
+{
+"w": "The",
+"start": 286.117,
+"end": 286.197
+},
+{
+"w": "human",
+"start": 286.297,
+"end": 286.697
+},
+{
+"w": "heart",
+"start": 286.817,
+"end": 287.217
+},
+{
+"w": "leans",
+"start": 287.277,
+"end": 287.657
+},
+{
+"w": "toward",
+"start": 287.757,
+"end": 288.237
+},
+{
+"w": "evil",
+"start": 288.337,
+"end": 288.517
+},
+{
+"w": "even",
+"start": 289.757,
+"end": 289.977
+},
+{
+"w": "from",
+"start": 290.117,
+"end": 290.337
+},
+{
+"w": "youth.",
+"start": 290.517,
+"end": 293.197
+},
+{
+"w": "I",
+"start": 293.337,
+"end": 293.357
+},
+{
+"w": "will",
+"start": 293.437,
+"end": 293.597
+},
+{
+"w": "not",
+"start": 293.657,
+"end": 293.877
+},
+{
+"w": "strike",
+"start": 294.017,
+"end": 294.457
+},
+{
+"w": "down",
+"start": 294.577,
+"end": 295.037
+},
+{
+"w": "all",
+"start": 295.237,
+"end": 295.697
+},
+{
+"w": "life",
+"start": 296.257,
+"end": 296.697
+},
+{
+"w": "again",
+"start": 297.577,
+"end": 297.957
+},
+{
+"w": "as",
+"start": 300.878,
+"end": 300.958
+},
+{
+"w": "I",
+"start": 301.158,
+"end": 301.178
+},
+{
+"w": "have",
+"start": 301.318,
+"end": 301.578
+},
+{
+"w": "done.\u201d",
+"start": 301.698,
+"end": 302.798
+},
+{
+"w": "All",
+"start": 304.678,
+"end": 306.598
+},
+{
+"w": "earth\u2019s",
+"start": 308.398,
+"end": 309.258
+},
+{
+"w": "days",
+"start": 309.458,
+"end": 309.918
+},
+{
+"w": "shall",
+"start": 310.138,
+"end": 310.398
+},
+{
+"w": "keep",
+"start": 310.438,
+"end": 310.738
+},
+{
+"w": "their",
+"start": 310.878,
+"end": 311.198
+},
+{
+"w": "rhythm:",
+"start": 311.298,
+"end": 311.778
+},
+{
+"w": "seedtime,",
+"start": 314.158,
+"end": 315.038
+},
+{
+"w": "harvest,",
+"start": 315.158,
+"end": 315.898
+},
+{
+"w": "cold",
+"start": 316.078,
+"end": 316.538
+},
+{
+"w": "and",
+"start": 316.558,
+"end": 316.759
+},
+{
+"w": "heat,",
+"start": 320.659,
+"end": 320.739
+},
+{
+"w": "summer,",
+"start": 320.839,
+"end": 321.499
+},
+{
+"w": "spring,",
+"start": 321.759,
+"end": 322.199
+},
+{
+"w": "day",
+"start": 322.839,
+"end": 323.359
+},
+{
+"w": "and",
+"start": 324.159,
+"end": 324.219
+},
+{
+"w": "night\u2014",
+"start": 324.279,
+"end": 324.659
+},
+{
+"w": "none",
+"start": 326.779,
+"end": 327.139
+},
+{
+"w": "shall",
+"start": 327.639,
+"end": 328.339
+},
+{
+"w": "cease.\u201d",
+"start": 328.639,
+"end": 329.019
+}
+],
+"corrections": [
+"\"of month ten,\" moved to 77.88-79.5 s: CTC stretched them over an instrumental gap; Whisper small.en places them at 77.86-79.5 s."
+]
+}

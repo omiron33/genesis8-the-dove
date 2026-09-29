@@ -1,0 +1,6 @@
+media/
+out/
+intake/
+node_modules/
+._*
+.DS_Store
