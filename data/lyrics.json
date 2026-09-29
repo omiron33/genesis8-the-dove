@@ -204,7 +204,7 @@
 {
 "text": "the waters had ebbed from earth.",
 "start": 181.651,
-"end": 194.031
+"end": 193.36
 },
 {
 "text": "Noe opened the ark\u2019s covering",
@@ -358,13 +358,13 @@
 },
 {
 "text": "All earth\u2019s days shall keep their rhythm:",
-"start": 304.678,
+"start": 308.71,
 "end": 311.778
 },
 {
 "text": "seedtime, harvest, cold and heat,",
 "start": 314.158,
-"end": 320.739
+"end": 317.85
 },
 {
 "text": "summer, spring, day and night\u2014",
@@ -1285,8 +1285,8 @@
 },
 {
 "w": "out",
-"start": 147.969,
-"end": 149.249
+"start": 145.71,
+"end": 145.93
 },
 {
 "w": "again.",
@@ -1540,18 +1540,18 @@
 },
 {
 "w": "ebbed",
-"start": 183.051,
-"end": 187.611
+"start": 182.96,
+"end": 183.34
 },
 {
 "w": "from",
-"start": 187.651,
-"end": 189.911
+"start": 183.46,
+"end": 183.82
 },
 {
 "w": "earth.",
-"start": 191.311,
-"end": 194.031
+"start": 187.45,
+"end": 193.36
 },
 {
 "w": "Noe",
@@ -2355,13 +2355,13 @@
 },
 {
 "w": "All",
-"start": 304.678,
-"end": 306.598
+"start": 308.71,
+"end": 308.83
 },
 {
 "w": "earth\u2019s",
-"start": 308.398,
-"end": 309.258
+"start": 308.97,
+"end": 309.25
 },
 {
 "w": "days",
@@ -2410,8 +2410,8 @@
 },
 {
 "w": "heat,",
-"start": 320.659,
-"end": 320.739
+"start": 317.36,
+"end": 317.85
 },
 {
 "w": "summer,",
@@ -2455,6 +2455,8 @@
 }
 ],
 "corrections": [
-"\"of month ten,\" moved to 77.88-79.5 s: CTC stretched them over an instrumental gap; Whisper small.en places them at 77.86-79.5 s."
+"\"of month ten,\" moved to 77.88-79.5 s: CTC stretched them over an instrumental gap; Whisper small.en places them at 77.86-79.5 s.",
+"\"out\" 145.71, \"ebbed from\" 182.96-183.82, \"earth\" 187.45, \"All\" 308.71, \"heat\" 317.36: CTC had absorbed instrumental gaps; fixed where a windowed re-alignment agreed with Whisper.",
+"\"earth\u2019s\" 308.97 (windowed re-alignment), so it follows \"All\"."
 ]
 }

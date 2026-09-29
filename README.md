@@ -14,12 +14,12 @@ repository holds only what belongs to this song:
 - `data/audio.json`: measured beats and loudness envelopes.
 - `tools/analyze.py`: the beat and envelope measurement.
 
-## Test scenes
+## The film
 
-| Scene | Lyric | Idea |
-| --- | --- | --- |
-| `ararat` | "the mountain peaks came into view." | An aerial dawn over a sea of cloud; the deck sinks and the snow-lined peaks break through. |
-| `dove` | "At evening she came back, / an olive leaf held in her beak." | Slow motion, low over the withdrawing water, the dove backlit by the evening sun. |
-| `ark` | "Come out of the ark, / you, your wife, your sons," | The dark timber hold; the great door lowers and morning pours in along the floor. |
+36 scenes (`film.json`, plan in `docs/BRIEF.md`), 5:42 at 1920×1080 and 60 fps. One running motif, the
+waterline, a thin line of gold light that is the flood's level in every scene and settles at the end
+as the horizon. The colour builds from a silver flood to full morning at "Come out of the ark".
+`lib/` holds the shared worlds (sea, mountain, the ark's hold, dry ground, birds) and the look.
+The earlier test scenes `ararat`, `dove` and `ark` are kept in `scenes/`.
 
 Scripture text follows the Septuagint wording used in the song.
