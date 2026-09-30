@@ -34,7 +34,7 @@ vec3 shade(vec2 fc) {
   drawText(ctx, t) {
     ctx.font = '500 230px "EB Garamond"'; ctx.letterSpacing = '-2px';
     const ws = L1.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
-    const total = widthHere(ctx, ws.map((w) => w.s));
+    const total = widthHere(ctx, ws.map((w) => w.s)) + 40 * (ws.length - 1);
     let x = 1920 - total / 2;
     for (const w of ws) {
       const k = ease.out3((t - w.start + 0.1) / 0.4);
@@ -43,7 +43,7 @@ vec3 shade(vec2 fc) {
       if (k > 0 && lift < 1) {
         paintHere(ctx, w.s, x, 1240 - lift * 700, (k * (1 - lift)).toFixed(3));
       }
-      x += paintHere(ctx, w.s, 0, 0, 0);
+      x += paintHere(ctx, w.s, 0, 0, 0) + 40;
     }
   },
 });
