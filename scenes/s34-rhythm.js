@@ -1,7 +1,7 @@
 // 34 · (instrumental) "All earth's days shall keep their rhythm:"
 // A single olive tree on a green hill, still, while days pass over it on the beat: the sun wheels
 // across and down, night falls with its stars, dawn comes again. The line is set to the same pulse.
-import { keys, ease, grade, linesFrom, clean, clamp01, annotate, widthHere, paintHere } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { cameraPlane } from '/engine.js';
 
 const audio = await fetch('/song/data/audio.json').then((r) => r.json());
@@ -100,27 +100,11 @@ vec3 shade(vec2 fc) {
   c = mix(c, tc, cov);
   // the gold line: the horizon's rim of light at dawn and dusk
   c += vec3(1.0, 0.62, 0.2) * exp(-abs(uv.y - h) * uRes.y * 0.15) * (0.3 + 1.5 * dusk) * step(h, uv.y + 0.01);
-  vec2 tuv = vec2(fc.x / uRes.x, fc.y / uRes.y);
-  c = inkOver(c, tuv);
   return c;
 }`,
     uniforms: { uDay: 0 },
     camera() { return { pos: [0, 0, 0], target: [0, 0, 1], fov: 40 }; },
     update(t, u) { u.uDay.value = ((t - b0) / period + 0.02); },
     post(t) { return grade(t, { exposure: 1.0, bloom: 0.12 }); },
-    drawText(ctx, t) {
-      ctx.font = '500 200px "EB Garamond"'; ctx.letterSpacing = '-1px';
-      const ws = L1.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:]+$/, '') }));
-      const tot = widthHere(ctx, ws.map((w) => w.s));
-      let x = 1920 - tot / 2;
-      for (const w of ws) {
-        const k = ease.out3((t - w.start + 0.1) / 0.4);
-        if (k > 0) { paintHere(ctx, w.s, x, 1880, k.toFixed(3)); }
-        x += paintHere(ctx, w.s, 0, 0, 0);
-      }
-      // the days counted in the gauge voice as they pass
-      const d = Math.max(0, Math.floor((t - b0) / period));
-      annotate(ctx, `DAY ${370 + d}   ·   AND DAY   ·   AND NIGHT`, 1920, 2040, { size: 40, alpha: 0.65, align: 'center' });
-    },
   };
 };

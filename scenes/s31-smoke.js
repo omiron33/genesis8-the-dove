@@ -1,7 +1,7 @@
 // 31 · "The Lord God received the pleasing scent / and said within himself:"
 // The smoke of the offering climbs into a high, clear sky, and the camera tilts up with it. The words
 // rise inside the smoke, the name in the sacred register, thinning as they go up.
-import { keys, ease, grade, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -44,10 +44,6 @@ vec3 shade(vec2 fc) {
     }
   }
   c = c * T + L;
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
   uniforms: { ...GROUND_UNIFORMS, uGreen: 0.7, uWet: 0, uGLine: 0.2, uSunDir: [-0.6, 0.35, -0.7], uSunCol: [7, 5.6, 4] },
@@ -57,26 +53,4 @@ vec3 shade(vec2 fc) {
   },
   textPlane(t, cam) { return cameraPlane(cam, { width: 1, dist: 1, aspect: 16 / 9 }); },
   post(t) { return grade(t, { exposure: 1.0, saturation: 1.05 }); },
-  drawText(ctx, t) {
-    // each word rises slowly after it lands, as if carried up
-    const set = (L, y0, px, style, caps) => {
-      ctx.font = `${style} ${px}px "EB Garamond"`; ctx.fontVariantCaps = caps ? 'all-small-caps' : 'normal';
-      ctx.letterSpacing = caps ? '40px' : '-1px';
-      const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:]+$/, '') }));
-      const tot = widthHere(ctx, ws.map((w) => w.s));
-      let x = 1920 - tot / 2;
-      for (const w of ws) {
-        const k = ease.out3((t - w.start + 0.1) / 0.6);
-        const rise = Math.max(0, t - w.start) * 55;
-        const fade = 1 - clamp01((t - (w.end + 3.0)) / 2.0);
-        if (k > 0) { paintHere(ctx, w.s, x, y0 - rise, (k * fade).toFixed(3)); }
-        x += paintHere(ctx, w.s, 0, 0, 0);
-      }
-      ctx.fontVariantCaps = 'normal';
-    };
-    const name = { ...L1, words: L1.words.slice(0, 3) }, rest = { ...L1, words: L1.words.slice(3) };
-    set(name, 1300, 190, '500', true);
-    set(rest, 1560, 170, 'italic 500', false);
-    set(L2, 1900, 170, 'italic 500', false);
-  },
 });

@@ -1,7 +1,7 @@
 // 17 · "He waited seven more days, / then sent the dove out again."
 // Through the open window, seven days and nights pass in the light on the timber. Seven gold marks
 // are counted beside the lyric, one for each day. Then the dove leaves through the window again.
-import { keys, ease, grade, linesFrom, clean, clamp01, annotate, dayCount, SIGNAL, paintHere } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, dayCount, SIGNAL } from '/song/lib/look.js';
 import { HOLD_GLSL, HOLD_UNIFORMS } from '/song/lib/hold.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -35,10 +35,6 @@ vec3 shade(vec2 fc) {
       c = birdShade(lp, lrd, uYaw, 0.0, uPh, 0.0, 1.0, SUN, uSunCol * 0.2, vec3(0.5, 0.52, 0.55), 0.0) + vec3(1.0, 0.62, 0.3) * uLamp * 0.2 / (dot(l, l) + 0.3);
     }
   }
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
     uniforms: { ...HOLD_UNIFORMS, uWin: 1, uSeams: 0.3, uFill: 0.1, uLamp: 4, uLampPos: [2.3, 1.55, 20.9], uSunDir: [0.85, 0.42, 0.22], uSunCol: [6, 6, 6.2],
@@ -59,26 +55,5 @@ vec3 shade(vec2 fc) {
       u.uPh.value = (t - P.from) * 2.4 * 6.2831;
     },
     post(t) { return grade(t, { exposure: 1.1 + 0.5 * (1 - light(t)) }); },
-    drawText(ctx, t) {
-      const row = (L, x, y, px, italic) => {
-        ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = `${-0.01 * px}px`;
-        for (const w of L.words) {
-          const s = clean(w.w).replace(/[;,.]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.4);
-          if (k > 0) { paintHere(ctx, s, x, y + (1 - k) * 30, k.toFixed(3)); }
-          x += paintHere(ctx, s, 0, 0, 0);
-        }
-      };
-      row(L1, 220, 1500, 200, false);
-      // the tally: one gold stroke per day that passes
-      const d = day(t);
-      for (let i = 0; i < 7; i++) {
-        const k = ease.out3(d - i);
-        if (k <= 0) continue;
-        ctx.fillStyle = `rgba(${SIGNAL}, ${(0.9 * k).toFixed(3)})`;
-        ctx.fillRect(240 + i * 58, 1640 + 170 * (1 - k), 10, 170 * k);
-      }
-      if (d > 0) annotate(ctx, `DAY ${264 + Math.floor(d)}`, 240 + 7 * 58 + 40, 1800, { size: 48, alpha: 0.8 });
-      row(L2, 220, 1990, 190, true);
-    },
   };
 };

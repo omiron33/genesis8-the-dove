@@ -1,7 +1,7 @@
 // 09 · "The waters kept on falling / until the tenth month."
 // Low over the flood beneath the ark's mountain. The gold tide mark slides down the rock, leaving
 // fainter rings where the water stood; the words ride down with it.
-import { keys, ease, grade, warmth, linesFrom, clean, gauge, clamp01, paintHere } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { MOUNTAIN_GLSL, MOUNTAIN_UNIFORMS } from '/song/lib/mountain.js';
 import { cameraPlane } from '/engine.js';
 
@@ -16,10 +16,6 @@ vec3 shade(vec2 fc) {
   float jit = hash12(fc + fract(uTime * 7.31) * 57.0);
   float depth;
   vec3 c = mountainScene(ro, rd, jit, depth);
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
   uniforms: { ...MOUNTAIN_UNIFORMS, uRel: 1, uWater: -0.05, uTide: 1.2, uRings: 0.009, uMist: -1, uSunDir: [-0.4, 0.45, -0.6], uSunCol: [8, 8, 8.4] },
@@ -33,21 +29,4 @@ vec3 shade(vec2 fc) {
     u.uWarm.value = warmth(t);
   },
   post(t) { return grade(t, { exposure: 1.05 }); },
-  drawText(ctx, t) {
-    gauge(ctx, t, 150, 180, { alpha: 0.75, size: 44 });
-    // the lines drift down the frame with the water
-    const drop = ease.inOut3((t - P.from) / (P.to - P.from)) * 120;
-    const row = (L, x, y, px, italic) => {
-      ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = `${-0.01 * px}px`;
-      for (const w of L.words) {
-        const s = clean(w.w).replace(/[;,.]+$/, '');
-        const k = ease.out3((t - w.start + 0.1) / 0.4);
-        const sink = ease.inOut3((t - w.end) / 2.0) * 50;
-        if (k > 0) { paintHere(ctx, s, x, y + drop + sink - (1 - k) * 40, k.toFixed(3)); }
-        x += paintHere(ctx, s, 0, 0, 0);
-      }
-    };
-    row(L1, 200, 1420, 200, false);
-    row(L2, 520, 1680, 200, true);
-  },
 });

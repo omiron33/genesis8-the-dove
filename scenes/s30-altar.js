@@ -1,7 +1,7 @@
 // 30 · "Noe built an altar to the Lord. / From every clean beast and bird / he offered whole burnt offerings."
 // On the new grass, in the gold of the morning, an altar of rough stones is built one stone per
 // measured beat. On "burnt offerings" the fire takes, and its first smoke begins to rise.
-import { keys, ease, grade, linesFrom, clean, clamp01, paintHere } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -80,10 +80,6 @@ vec3 shade(vec2 fc) {
     }
     c = c * T + L;
   }
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
     uniforms: { ...GROUND_UNIFORMS, uGreen: 0.62, uWet: 0, uGLine: 0.35, uFire: 0, uDrop: drops, uSunDir: [-0.5, 0.22, -0.8], uSunCol: [7, 5.2, 3.4] },
@@ -95,17 +91,5 @@ vec3 shade(vec2 fc) {
     textPlane(t, cam) { return cameraPlane(cam, { width: 1, dist: 1, aspect: 16 / 9 }); },
     update(t, u) { u.uFire.value = ease.inOut3((t - (burnt.start - 0.1)) / 1.2); },
     post(t) { return grade(t, { exposure: 0.9, bloom: 0.14, threshold: 1.0, saturation: 1.08 }); },
-    drawText(ctx, t) {
-      const rows = [[L1, 330, 180, false], [L2, 1750, 160, true], [L3, 1950, 160, true]];
-      for (const [L, y, px, it] of rows) {
-        ctx.font = `${it ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '-1px';
-        let x = 220;
-        for (const w of L.words) {
-          const s = clean(w.w).replace(/[;,.:]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.4);
-          if (k > 0) { paintHere(ctx, s, x, y, k.toFixed(3)); }
-          x += paintHere(ctx, s, 0, 0, 0);
-        }
-      }
-    },
   };
 };

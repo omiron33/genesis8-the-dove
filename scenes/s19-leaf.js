@@ -1,7 +1,7 @@
 // 19 · "Noe knew the waters had withdrawn."
 // The olive leaf, very close, lit through from behind by the evening: its midrib and veins glow.
 // The line is written along the midrib, word by word, as if the leaf itself carried the news.
-import { keys, ease, grade, linesFrom, clean, clamp01, widthHere, paintHere } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, widthHere, paintHere } from '/song/lib/type.js';
 
 const [L1] = linesFrom('Noe knew the waters had withdrawn');
 
@@ -59,7 +59,7 @@ vec3 shade(vec2 fc) {
       // the lyric along the midrib, pale as the veins
       vec2 tuv = vec2(u * 1.04 - 0.02, 0.5 + vv / 0.15 * 0.5 * 1.1);
       float tx = texture(uText, tuv).a;
-      trans = mix(trans, vec3(1.35, 1.3, 1.0), tx * 0.92);
+      trans = mix(trans, vec3(0.03, 0.05, 0.01), tx * 0.95);
       trans *= 0.75 + 0.25 * smoothstep(0.0, 0.05, edge);        // the rim is thicker and darker
       trans *= 0.85 + 0.3 * (0.5 + 0.5 * vv / 0.15);             // light falling across the blade
       col = mix(col, trans, inside);
@@ -77,12 +77,12 @@ vec3 shade(vec2 fc) {
   drawText(ctx, t) {
     ctx.font = 'italic 500 225px "EB Garamond"'; ctx.letterSpacing = '0px';
     const ws = L1.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
-    const total = ctx.measureText(ws.map((w) => w.s).join(' ')).width;
+    const total = widthHere(ctx, ws.map((w) => w.s));
     let x = (4096 - total) / 2;
     for (const w of ws) {
       const k = ease.out3((t - w.start + 0.1) / 0.4);
-      if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${k.toFixed(3)})`; ctx.fillText(w.s, x, 590); }
-      x += ctx.measureText(w.s + ' ').width;
+      if (k > 0) paintHere(ctx, w.s, x, 590, k, '255, 255, 255');
+      x += paintHere(ctx, w.s, 0, 0, 0);
     }
   },
 });

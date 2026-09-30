@@ -1,7 +1,7 @@
 // 23 · "Noe opened the ark's covering"
 // Looking straight up inside the hold: the roof boards are lifted away one run after another and
 // the sky floods in. Each word rises off the frame with the boards, carried up into the light.
-import { keys, ease, grade, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { HOLD_GLSL, HOLD_UNIFORMS } from '/song/lib/hold.js';
 import { cameraPlane } from '/engine.js';
 
@@ -16,10 +16,6 @@ vec3 shade(vec2 fc) {
   float jit = hash12(fc + fract(uTime * 5.13) * 77.0);
   float depth;
   vec3 c = holdScene(ro, rd, jit, depth);
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
   uniforms: { ...HOLD_UNIFORMS, uRoof: 0, uLand: 1, uSeams: 1, uFill: 0.1, uSunDir: [0.3, 0.9, 0.25], uSunCol: [8, 7.4, 6.4] },
@@ -30,19 +26,4 @@ vec3 shade(vec2 fc) {
   textPlane(t, cam) { return cameraPlane(cam, { width: 1, dist: 0.5, aspect: 16 / 9 }); },
   update(t, u) { u.uRoof.value = keys(t, [[L1.start - 0.2, 0.0], [L1.end + 0.3, 0.72, ease.inOut3]]); },
   post(t) { return grade(t, { exposure: keys(t, [[P.from, 1.9], [L1.end, 1.0]]), bloom: 0.12, saturation: 1.05 }); },
-  drawText(ctx, t) {
-    ctx.font = '500 230px "EB Garamond"'; ctx.letterSpacing = '-2px';
-    const ws = L1.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
-    const total = widthHere(ctx, ws.map((w) => w.s));
-    let x = 1920 - total / 2;
-    for (const w of ws) {
-      const k = ease.out3((t - w.start + 0.1) / 0.4);
-      const lift = ease.in2((t - (w.end + 0.8)) / 2.2);
-      const wd = ctx.measureText(w.s).width;
-      if (k > 0 && lift < 1) {
-        paintHere(ctx, w.s, x, 1240 - lift * 700, (k * (1 - lift)).toFixed(3));
-      }
-      x += wd + ctx.measureText(' ').width;
-    }
-  },
 });

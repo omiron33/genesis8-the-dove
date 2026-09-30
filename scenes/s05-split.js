@@ -2,7 +2,7 @@
 // The lens sits exactly at the water's surface: the gold waterline wavers across the frame, the deep
 // below with its springs rising, the sky above with its clouds closing. The first line lives under
 // the water, the second in the sky, and each closes like a shutter toward the line as it ends.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { cameraPlane } from '/engine.js';
 
@@ -65,12 +65,6 @@ vec3 shade(vec2 fc) {
   // the gold waterline where air meets water
   float px = abs(s) * uRes.y / (2.0 * tan(radians(uFov) * 0.5)) / 0.6;
   c += LINE_GOLD * (exp(-px * px * 0.5) * 2.6 + exp(-px * 0.08) * 0.25) * uLineGlow;
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec2 tuv = tp.xy;
-    if (s < 0.0) tuv += vec2(sin(tp.y * 40.0 + uTime * 2.0), 0.0) * 0.0015;   // a little bent under water
-    c = inkOver(c, tuv);
-  }
   return c;
 }`,
   uniforms: { ...SEA_UNIFORMS, uNight: 0.2, uWind: 0.15, uSprings: 1, uGates: 0, uSunDir: [0.2, 0.2, 1.0], uSunCol: [0.8, 0.84, 0.9] },
@@ -85,28 +79,4 @@ vec3 shade(vec2 fc) {
     u.uWarm.value = warmth(t);
   },
   post(t) { return grade(t, { exposure: 1.1, bloom: 0.1 }); },
-  drawText(ctx, t) {
-    const W = ctx.canvas.width, H = ctx.canvas.height;
-    // shutter: letters flatten toward the waterline (y = H/2) after their line
-    const row = (L, y, size, italic, closeAt, dir) => {
-      ctx.font = `${italic ? 'italic ' : ''}500 ${size}px "EB Garamond"`; ctx.letterSpacing = `${-0.01 * size}px`;
-      const words = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
-      const total = widthHere(ctx, words.map((w) => w.s));
-      const close = ease.inOut3((t - closeAt) / 0.6);
-      let x = (W - total) / 2;
-      for (const w of words) {
-        const k = ease.out3((t - w.start + 0.1) / 0.4);
-        const wd = ctx.measureText(w.s).width;
-        if (k > 0 && close < 0.999) {
-          ctx.save();
-          ctx.translate(0, H / 2); ctx.scale(1, 1 - close); ctx.translate(0, -H / 2);
-          paintHere(ctx, w.s, x, y + dir * (1 - k) * 60, k.toFixed(3));
-          ctx.restore();
-        }
-        x += wd + ctx.measureText(' ').width;
-      }
-    };
-    row(L1, H / 2 + 360, 200, false, L1.end + 0.25, 1);
-    row(L2, H / 2 - 230, 230, true, L2.end + 0.35, -1);
-  },
 });

@@ -2,7 +2,7 @@
 // Rain falls, then stops in mid-air on "held back". The camera drifts forward through the hanging
 // drops, each a tiny lens with the sky upside down in it. On the second line the words ebb: they
 // sink a little and the gauge's level drops.
-import { keys, ease, grade, warmth, linesFrom, clean, gauge, clamp01, paintHere, widthHere } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 
 const [L1, L2] = linesFrom('the rain from heaven', 'The waters ebbed');
@@ -27,10 +27,6 @@ vec3 shade(vec2 fc) {
   float depth;
   vec3 c = seaScene(ro, rd, depth);
   // the lyric hangs among the drops
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && tp.z < depth && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   // drops composite over everything, nearer ones on top
   vec3 acc = vec3(0); float cover = 0.0;
   for (int k = 39; k >= 0; k--) {
@@ -74,23 +70,4 @@ vec3 shade(vec2 fc) {
     u.uWarm.value = warmth(t);
   },
   post(t) { return grade(t, { exposure: 1.05 }); },
-  drawText(ctx, t) {
-    gauge(ctx, t, 60, 110, { alpha: 0.7, size: 36 });
-    const row = (L, y, size, italic, sink) => {
-      ctx.font = `${italic ? 'italic ' : ''}500 ${size}px "EB Garamond"`; ctx.letterSpacing = `${-0.01 * size}px`;
-      const words = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
-      const total = widthHere(ctx, words.map((w) => w.s));
-      let x = (4096 - total) / 2;
-      for (const w of words) {
-        const k = ease.out3((t - w.start + 0.1) / 0.4);
-        // ebbing: after it is sung each word slowly settles lower, like water going down
-        const ebb = sink ? ease.inOut3((t - w.end) / 2.5) * 70 : 0;
-        if (k > 0) { paintHere(ctx, w.s, x, y + (1 - k) * -40 + ebb, k.toFixed(3)); }
-        x += paintHere(ctx, w.s, 0, 0, 0);
-      }
-    };
-    const out = 1 - clamp01((t - (L2.start - 0.5)) / 0.4);
-    if (out > 0) { ctx.globalAlpha = out; row(L1, 640, 230, false, false); ctx.globalAlpha = 1; }
-    if (t > L2.start - 0.5) row(L2, 700, 230, true, true);
-  },
 });

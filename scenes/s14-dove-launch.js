@@ -1,7 +1,7 @@
 // 14 · "Then he sent a dove to learn / if waters had withdrawn from earth."
 // Slow motion beside the dark hull: a porcelain-white dove leaves the window and beats out over the
 // grey water. Each word opens like a wing as it is sung, pivoting out from its folded edge.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, paintHere } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -31,10 +31,6 @@ vec3 shade(vec2 fc) {
   vec3 lp, lrd;
   float tb = birdMarch(ro, rd, uBird, uYaw, uBank, 1.0, uPh, 0.0, 1.0, lp, lrd);
   if (tb > 0.0 && tb < depth) c = birdShade(lp, lrd, uYaw, uBank, uPh, 0.0, 1.0, SUN, uSunCol * 1.5, skyCol(vec3(0, 1, 0)) * 1.1, 0.0);
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
     uniforms: { ...SEA_UNIFORMS, uNight: 0.2, uWind: 0.12, uBird: [0, 2, 3], uYaw: 0, uPh: 0, uBank: 0, uSunDir: [-0.4, 0.45, 1.0], uSunCol: [1.1, 1.05, 1.0], uArkDist: 0 },
@@ -49,29 +45,5 @@ vec3 shade(vec2 fc) {
       u.uWarm.value = warmth(t);
     },
     post(t) { return grade(t, { exposure: 1.02 }); },
-    drawText(ctx, t) {
-      const row = (L, x, y, px, italic) => {
-        ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = `${-0.01 * px}px`;
-        for (const w of L.words) {
-          const s = clean(w.w).replace(/[;,.]+$/, '');
-          const wd = ctx.measureText(s).width;
-          // a folded wing opening: the word's width swings out from its left edge, slightly lifted
-          const k = ease.out3((t - w.start + 0.08) / 0.5);
-          if (k > 0) {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.transform(Math.max(0.02, k), (1 - k) * -0.35, 0, 1, 0, 0);
-            paintHere(ctx, s, 0, 0, Math.min(1, k * 1.4).toFixed(3));
-            ctx.restore();
-          }
-          x += wd + ctx.measureText(' ').width;
-        }
-      };
-      const out = 1 - clamp01((t - (P.to - 0.4)) / 0.4);
-      ctx.globalAlpha = out;
-      row(L1, 220, 1620, 200, false);
-      row(L2, 420, 1880, 200, true);
-      ctx.globalAlpha = 1;
-    },
   };
 };

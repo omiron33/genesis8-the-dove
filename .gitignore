@@ -4,3 +4,4 @@ intake/
 node_modules/
 ._*
 .DS_Store
+movies/

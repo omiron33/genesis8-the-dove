@@ -1,7 +1,7 @@
 // 15 · "The dove found no place to rest; / water still covered all the earth."
 // Straight down from high above: nothing but water to every edge. A tiny white dove circles over it,
 // her shadow on the swell, and the words drift apart across the water with nowhere to settle.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, project, gauge, paintHere, widthHere } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, project } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -38,10 +38,6 @@ vec3 shade(vec2 fc) {
   vec3 lp, lrd;
   float tb = birdMarch(ro, rd, uBird, uYaw, uBank, 1.0, uPh, 0.0, 1.0, lp, lrd);
   if (tb > 0.0 && tb < depth) c = birdShade(lp, lrd, uYaw, uBank, uPh, 0.0, 1.0, SUN, uSunCol * 1.5, skyCol(vec3(0, 1, 0)) * 1.1, 0.0);
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
     uniforms: { ...SEA_UNIFORMS, uNight: 0.15, uWind: 0.25, uBird: [0, 4, 3], uYaw: 0, uPh: 0, uBank: 0, uSunDir: [0.35, 1.0, 0.25], uSunCol: [1.1, 1.05, 1.0], uLineGlow: 0 },
@@ -56,29 +52,5 @@ vec3 shade(vec2 fc) {
       u.uWarm.value = warmth(t);
     },
     post(t) { return grade(t, { exposure: 1.05 }); },
-    drawText(ctx, t) {
-      gauge(ctx, t, 150, 180, { alpha: 0.7, size: 44 });
-      // the phrase is set in order, then its words slowly drift apart: nowhere to settle
-      const rows = [[L1, 860, 190, false], [L2, 1300, 170, true]];
-      for (const [L, y, px, it] of rows) {
-        ctx.font = `${it ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '-1px';
-        const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
-        const sp = ctx.measureText(' ').width;
-        const vw = (x) => paintHere(ctx, x, 0, 0, 0) - sp * 1.05;
-      const total = widthHere(ctx, ws.map((w) => w.s));
-        let x = 1920 - total / 2;
-        ws.forEach((w, i) => {
-          const k = ease.out3((t - w.start + 0.1) / 0.4);
-          const wd = vw(w.s);
-          const cx = x + wd / 2 - 1920;
-          const spread = 1 + 0.35 * ease.inOut3((t - L.end) / 3.0);
-          const dy = 60 * Math.sin(i * 2.1 + 1.0) * ease.inOut3((t - L.end) / 3.0);
-          if (k > 0) {
-            paintHere(ctx, w.s, 1920 + cx * spread - wd / 2, y + dy, (k * (1 - clamp01((t - (P.to - 0.5)) / 0.5))).toFixed(3));
-          }
-          x += wd + sp;
-        });
-      }
-    },
   };
 };

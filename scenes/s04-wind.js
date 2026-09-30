@@ -1,7 +1,7 @@
 // 04 · "God sent a wind across the earth; / the waters began to fall."
 // A gust front races across the sea toward us; spray streaks through the frame. The first line
 // blows in letter by letter like spray; the second line settles, each word dropping on its sung start.
-import { keys, ease, grade, warmth, linesFrom, clean, gauge, clamp01, paintHere } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { cameraPlane } from '/engine.js';
 
@@ -41,10 +41,6 @@ vec3 shade(vec2 fc) {
   float depth;
   vec3 c = seaScene(ro, rd, depth);
   c += spray(ro, rd);
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
   uniforms: { ...SEA_UNIFORMS, uNight: 0.25, uWind: 0.3, uSpray: 0, uSunDir: [-0.5, 0.08, 1.0], uSunCol: [0.75, 0.8, 0.86] },
@@ -61,34 +57,4 @@ vec3 shade(vec2 fc) {
     u.uWarm.value = warmth(t);
   },
   post(t) { return grade(t, { exposure: 1.0, ca: 0.45 }); },
-  drawText(ctx, t) {
-    const W = ctx.canvas.width;
-    gauge(ctx, t, 150, 180, { alpha: 0.72, size: 44 });
-    // line 1: each letter is carried in on the wind from the left and resolves in place
-    ctx.font = '500 250px "EB Garamond"'; ctx.letterSpacing = '0px';
-    let x = 240; const y = 900;
-    L1.words.forEach((w) => {
-      const s = clean(w.w).replace(/[;,.]+$/, '');
-      for (let i = 0; i < s.length; i++) {
-        const ch = s[i]; const cw = ctx.measureText(ch).width;
-        const k = ease.out5((t - (w.start - 0.25 + i * 0.03)) / 0.55);
-        if (k > 0) {
-          const j = Math.sin(i * 12.9 + w.start * 7.0);
-          paintHere(ctx, ch, x + (1 - k) * (700 + 300 * j), y + (1 - k) * 120 * j, (k * (1 - clamp01((t - (L2.start + 1.8)) / 0.5))).toFixed(3));
-        }
-        x += cw;
-      }
-      x += ctx.measureText(' ').width;
-    });
-    // line 2: words fall into place from above, the water line's first drop
-    ctx.font = 'italic 500 210px "EB Garamond"';
-    let x2 = 420; const y2 = 1260;
-    L2.words.forEach((w) => {
-      const s = clean(w.w).replace(/[;,.]+$/, '');
-      const k = ease.out3((t - w.start + 0.1) / 0.45);
-      if (k > 0) { paintHere(ctx, s, x2, y2 - (1 - k) * 90, k.toFixed(3)); }
-      x2 += paintHere(ctx, s, 0, 0, 0);
-    });
-    void W;
-  },
 });

@@ -2,7 +2,7 @@
 // A still, wide frame over warming water. The dove flies away from us toward the gold line of the
 // horizon until she is gone; the camera does not follow. The last line thins letter by letter into
 // the sky.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, gauge, paintHere, widthHere, voiceStyle } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -32,10 +32,6 @@ vec3 shade(vec2 fc) {
       c = mix(bc, skyCol(rd), 1.0 - exp(-tb * 0.01));
     }
   }
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
     uniforms: { ...SEA_UNIFORMS, uNight: 0.0, uWind: 0.08, uBird: [0, 2, 2], uYaw: 0, uPh: 0, uShow: 0, uSunDir: [0.5, 0.12, 1.0], uSunCol: [1.3, 1.05, 0.8], uLineGlow: 1.2 },
@@ -53,35 +49,5 @@ vec3 shade(vec2 fc) {
       u.uWarm.value = warmth(t) + 0.1;
     },
     post(t) { return grade(t, { exposure: 1.0 }); },
-    drawText(ctx, t) {
-      gauge(ctx, t, 150, 180, { alpha: 0.7, size: 44 });
-      const set = (L, y, px, italic, alpha, dissolve) => {
-        ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '0px';
-        const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
-        const sp = ctx.measureText(' ').width;
-        const total = widthHere(ctx, ws.map((w) => w.s));
-        let x = 1920 - total / 2;
-        let ci = 0;
-        for (const w of ws) {
-          const k = ease.out3((t - w.start + 0.1) / 0.45);
-          const vs = voiceStyle(w.s, px, italic);
-          ctx.font = vs.font; ctx.fontVariantCaps = vs.caps; ctx.letterSpacing = vs.track;
-          for (const ch of w.s) {
-            const cw = ctx.measureText(ch).width;
-            // dissolve: each letter lifts and thins, one after another, after the line
-            const d = dissolve ? ease.inOut3((t - (L.end + 0.6 + ci * 0.06)) / 1.4) : 0;
-            const a = k * alpha * (1 - d);
-            if (a > 0.003) { ctx.fillStyle = `rgba(${vs.color}, ${a.toFixed(3)})`; ctx.fillText(ch, x, y - d * 160); }
-            x += cw; ci++;
-          }
-          ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.fontVariantCaps = 'normal'; ctx.letterSpacing = '0px';
-          x += sp * 1.05;
-        }
-      };
-      const hand = (L, t0) => 1 - clamp01((t - t0) / 0.5);
-      set(L1, 1580, 170, false, hand(L1, L2.start - 0.3), false);
-      set(L2, 1580, 170, false, hand(L2, L3.start - 0.3) * (t > L2.start - 0.4 ? 1 : 0), false);
-      if (t > L3.start - 0.4) set(L3, 1580, 210, true, 1, true);
-    },
   };
 };

@@ -1,7 +1,7 @@
 // 03 · "every herd and creeping thing / that shared the ark with him."
 // Tracking along the ark's timber flank above the swell. The words are carved into the planks as
 // they are sung, and take the grey light in their cut edges.
-import { keys, ease, grade, warmth, linesFrom, clean } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean } from '/song/lib/type.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 
 const [L1, L2] = linesFrom('every herd and creeping thing', 'that shared the ark with him');
@@ -67,7 +67,7 @@ vec3 shade(vec2 fc) {
     float diff = 0.12 + 0.25 * sat(n.y + 0.6);
     vec3 col = alb * (sky * diff + vec3(1.25, 1.2, 1.12) * pow(kd, 1.5) * 3.2) * lap;
     // the cut exposes paler inner wood, lit on its upper edge
-    col = mix(col, vec3(0.66, 0.6, 0.52) * (0.35 + 0.9 * kd + 0.3 * diff), cut * 0.9);
+    col = mix(col, vec3(1.0, 0.9, 0.76) * (0.75 + 0.9 * kd + 0.3 * diff), cut);
     float spec = pow(sat(dot(reflect(rd, n), key)), 40.0) * (0.35 + wet * 0.8) * (0.6 + 0.8 * streak);
     col += vec3(0.8, 0.84, 0.9) * spec;
     float fog = 1.0 - exp(-t * 0.02);
@@ -94,7 +94,7 @@ vec3 shade(vec2 fc) {
       let cx = px(x);
       for (const w of L.words) {
         const s = clean(w.w).replace(/[,;:.]+$/, '');
-        const k = ease.out3((t - w.start + 0.05) / Math.max(0.2, Math.min(0.5, w.end - w.start)));
+        const k = ease.out3((t - w.start + 0.12) / 0.2);
         if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${k.toFixed(3)})`; ctx.fillText(s, cx, py(y)); }
         cx += ctx.measureText(s + ' ').width;
       }

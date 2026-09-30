@@ -2,7 +2,7 @@
 // Outside now, in full morning colour. Down the ark's ramp and across the new grass comes a procession
 // of sculpted animals, and birds break out over them. The words are kept like a catalogue: each kind
 // is entered in the index on the left as it is sung.
-import { keys, ease, grade, linesFrom, clean, clamp01, annotate, SIGNAL, paintHere } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, SIGNAL } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { ARK_GLSL } from '/song/lib/ark.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
@@ -108,10 +108,6 @@ vec3 shade(vec2 fc) {
     float tb = birdMarch(ro, rd, pos, -0.6 + fi * 0.2, 0.1, 2.5, uWalk * 14.0 + fi, 0.0, 1.0, lp, lrd);
     if (tb > 0.0 && tb < depth) { c = birdShade(lp, lrd, -0.6 + fi * 0.2, 0.1, uWalk * 14.0 + fi, 0.0, 1.0, SUN, uSunCol * 0.25, vec3(0.6, 0.7, 0.85), 0.0); depth = tb; }
   }
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
   uniforms: { ...GROUND_UNIFORMS, uGreen: 0.72, uWet: 0.25, uGLine: 0.3, uWalk: 0, uSunDir: [0.5, 0.18, 1.0], uSunCol: [9.0, 6.8, 4.4] },
@@ -122,35 +118,4 @@ vec3 shade(vec2 fc) {
   textPlane(t, cam) { return cameraPlane(cam, { width: 1, dist: 1, aspect: 16 / 9 }); },
   update(t, u) { u.uWalk.value = Math.max(0, t - P.from); },
   post(t) { return grade(t, { exposure: 1.0, saturation: 1.08 }); },
-  drawText(ctx, t) {
-    // lyric: one line at a time along the bottom
-    const lines = [L1, L2, L3];
-    const cur = lines.filter((L) => t > L.start - 0.3).pop();
-    if (cur) {
-      ctx.font = `${cur === L1 ? '' : 'italic '}500 170px "EB Garamond"`; ctx.letterSpacing = '-1px';
-      const out = cur === L3 ? 1 : 1 - clamp01((t - (lines[lines.indexOf(cur) + 1].start - 0.35)) / 0.3);
-      let x = 220;
-      for (const w of cur.words) {
-        const s = clean(w.w).replace(/[;,.:]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.4);
-        if (k > 0) { paintHere(ctx, s, x, 1940, (k * out).toFixed(3)); }
-        x += paintHere(ctx, s, 0, 0, 0);
-      }
-    }
-    // the catalogue: an index entry for every kind named
-    const kinds = [
-      ['creature', 'EVERY CREATURE'], ['birds', 'BIRDS'], ['beasts', 'BEASTS'], ['living', 'ALL LIVING FLESH'], ['crawls', 'ALL THAT CRAWLS'],
-    ];
-    const all = [...L1.words, ...L2.words, ...L3.words];
-    let row = 0;
-    for (const [key, label] of kinds) {
-      const w = all.find((x) => clean(x.w).toLowerCase().startsWith(key));
-      const k = ease.out3((t - w.start + 0.05) / 0.35);
-      if (k <= 0) continue;
-      const y = 300 + row * 110;
-      annotate(ctx, String(row + 1).padStart(2, '0'), 220, y, { size: 52, alpha: 0.9 * k, color: '255, 255, 255' });
-      annotate(ctx, label, 360, y, { size: 52, alpha: 0.95 * k, color: '255, 255, 255' });
-      ctx.fillStyle = `rgba(255,255,255,${(0.6 * k).toFixed(3)})`; ctx.fillRect(220, y + 26, 900 * k, 3);
-      row++;
-    }
-  },
 });

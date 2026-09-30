@@ -2,7 +2,7 @@
 // A blue morning over the green land. One bird, then two, four, a hundred: the flock doubles on the
 // beat until a murmuration fills the sky. The word "multiply" multiplies with it, filling the frame
 // in a widening field before the last line settles.
-import { keys, ease, grade, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -55,10 +55,6 @@ vec3 shade(vec2 fc) {
   float depth;
   vec3 c = groundScene(ro, rd, depth);
   if (depth > 1e3) c = flock(ro, rd, c);
-  vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
-  if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    c = inkOver(c, tp.xy);
-  }
   return c;
 }`,
   uniforms: { ...GROUND_UNIFORMS, uGreen: 1, uWet: 0, uGLine: 0.25, uCount: 0, uSunDir: [0.4, 0.55, -0.6], uSunCol: [7, 6.6, 6] },
@@ -73,31 +69,4 @@ vec3 shade(vec2 fc) {
     u.uCount.value = t < L1.words[2].start ? 0.002 : Math.min(1, Math.pow(2, k * 11) / 2048);
   },
   post(t) { return grade(t, { exposure: 1.0, saturation: 1.1 }); },
-  drawText(ctx, t) {
-    // the multiplying word: one copy, then copies doubling outward in a field
-    const k = clamp01((t - mult.start) / (L2.start - mult.start + 0.8));
-    const n = t < mult.start ? 0 : Math.min(128, Math.floor(Math.pow(2, 1 + k * 7)));
-    ctx.font = 'italic 500 150px "EB Garamond"'; ctx.letterSpacing = '0px';
-    for (let i = 0; i < n; i++) {
-      const a = i * 2.39996, r = 150 * Math.sqrt(i) ;
-      const x = 1920 + Math.cos(a) * r * 1.7, y = 900 + Math.sin(a) * r;
-      const fade = (i === 0 ? 1 : 0.8) * (1 - clamp01((t - (L2.start + 0.2)) / 0.6) * (i === 0 ? 0.3 : 1));
-      ctx.fillStyle = `rgba(255,255,255,${fade.toFixed(3)})`;
-      const w = ctx.measureText('multiply').width;
-      ctx.fillText('multiply', x - w / 2, y);
-    }
-    const row = (L, y, px, italic, alpha) => {
-      ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '-1px';
-      const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:”]+$/, '') }));
-      const tot = widthHere(ctx, ws.map((w) => w.s));
-      let x = 1920 - tot / 2;
-      for (const w of ws) {
-        const kk = ease.out3((t - w.start + 0.1) / 0.4);
-        if (kk > 0 && !(L === L1 && w === ws[ws.length - 1] && n > 0)) { paintHere(ctx, w.s, x, y, (kk * alpha).toFixed(3)); }
-        x += paintHere(ctx, w.s, 0, 0, 0);
-      }
-    };
-    row(L1, 2020, 170, false, 1 - clamp01((t - (L2.start - 0.3)) / 0.4));
-    row(L2, 2020, 190, true, 1);
-  },
 });

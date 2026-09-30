@@ -1,7 +1,7 @@
 // 02 · "God remembered Noe, / and every beast and bird,"
 // The words rise from under the water and settle on the surface; the camera cranes up to find the
 // ark small on the horizon.
-import { keys, ease, gauge, grade, warmth, linesFrom, setLine, clamp01, paintHere, widthHere } from '/song/lib/look.js';
+import { keys, ease, gauge, grade, warmth, linesFrom, setLine, clamp01, paintHere, widthHere } from '/song/lib/type.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 
 const [L1, L2] = linesFrom('God remembered Noe', 'and every beast and bird');
@@ -23,7 +23,8 @@ vec3 shade(vec2 fc) {
     if (under < 0.0 && tp.z < depth) {
       vec4 tx = texture(uText, tp.xy);
       // letters standing in the grey air take a little of the sky
-      c = c * (1.0 - tx.a) + tx.rgb * mix(vec3(1.25), skyCol(rd) * 1.6, 0.25);
+      c *= mix(1.0, 0.3, sat(texture(uTextShade, tp.xy).a * 9.0));
+      c = inkOver(c, tp.xy);
     } else if (under > 0.0) {
       // seen through the surface: bent by the swell, dimmed and tinted by depth
       vec3 n = seaNormal(p, tp.z);
@@ -35,7 +36,7 @@ vec3 shade(vec2 fc) {
   }
   return c;
 }`,
-  uniforms: { ...SEA_UNIFORMS, uNight: 0.22, uWind: 0.18, uArkDist: 900, uSunDir: [0.25, 0.06, 1.0], uSunCol: [0.85, 0.87, 0.9] },
+  uniforms: { ...SEA_UNIFORMS, uNight: 0.22, uWind: 0.18, uArkDist: 900, uSunDir: [0.75, 0.06, 1.0], uSunCol: [0.85, 0.87, 0.9] },
   camera(t) {
     const p = ease.inOut3((t - P.from) / (P.to - P.from));
     const pos = [keys(t, [[P.from, -0.6], [P.to, 0.4]]), 0.55 + 2.6 * p, -1.5 * p];
