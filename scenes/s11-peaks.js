@@ -1,7 +1,7 @@
 // 11 · "the mountain peaks came into view."
 // The approved test shot: as the words are sung the cloud deck sinks and the snow-lined peaks rise
 // through it, the gold line of the horizon behind them.
-import { keys, ease, grade, warmth, linesFrom, clean, annotate, gauge, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, annotate, gauge, clamp01, paintHere } from '/song/lib/look.js';
 import { MOUNTAIN_GLSL, MOUNTAIN_UNIFORMS } from '/song/lib/mountain.js';
 import { HORIZON_GLSL } from '/song/scenes/s10-deck.js';
 import { cameraPlane } from '/engine.js';
@@ -21,8 +21,7 @@ vec3 shade(vec2 fc) {
   if (depth > 70.0) c += horizonLine(rd, uLineGlow);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -42,8 +41,8 @@ vec3 shade(vec2 fc) {
     let x = 200;
     for (const w of L1.words) {
       const s = clean(w.w).replace(/[;,.]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.45);
-      if (k > 0) { ctx.fillStyle = `rgba(30, 38, 46, ${k.toFixed(3)})`; ctx.fillText(s, x, 560 + (1 - k) * 30); }
-      x += ctx.measureText(s + ' ').width;
+      if (k > 0) { paintHere(ctx, s, x, 560 + (1 - k) * 30, k.toFixed(3)); }
+      x += paintHere(ctx, s, 0, 0, 0);
     }
     gauge(ctx, t, 150, 180, { alpha: 0.7, size: 44, color: '30, 38, 46' });
   },

@@ -3,7 +3,7 @@
 // Ararat again, now in full morning colour: green on the lower slopes, the water gone to a far bright
 // line. The lines come down the frame like a path descending the mountain, switching back and forth,
 // each one a step lower than the last.
-import { keys, ease, grade, linesFrom, clean, clamp01, gauge } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, gauge, paintHere, widthHere } from '/song/lib/look.js';
 import { MOUNTAIN_GLSL, MOUNTAIN_UNIFORMS } from '/song/lib/mountain.js';
 import { HORIZON_GLSL } from '/song/scenes/s10-deck.js';
 import { cameraPlane } from '/engine.js';
@@ -23,10 +23,7 @@ vec3 shade(vec2 fc) {
   if (depth > 70.0) c += horizonLine(rd, uLineGlow);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
-    vec3 ink = mix(vec3(1.05, 1.0, 0.94), vec3(0.05, 0.045, 0.04), smoothstep(0.42, 0.52, lum));
-    c = mix(c, ink, tx.a);
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -46,13 +43,13 @@ vec3 shade(vec2 fc) {
       const px = i === 0 ? 170 : 150;
       ctx.font = `${i % 2 ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '-1px';
       const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:]+$/, '') }));
-      const tot = ctx.measureText(ws.map((w) => w.s).join(' ')).width;
+      const tot = widthHere(ctx, ws.map((w) => w.s));
       let x = left ? 260 + i * 60 : 3580 - tot - i * 60;
       for (const w of ws) {
         const k = ease.out3((t - w.start + 0.1) / 0.4);
         // words step down onto their line from the one above
-        if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${k.toFixed(3)})`; ctx.fillText(w.s, x, y - (1 - k) * 120); }
-        x += ctx.measureText(w.s + ' ').width;
+        if (k > 0) { paintHere(ctx, w.s, x, y - (1 - k) * 120, k.toFixed(3)); }
+        x += paintHere(ctx, w.s, 0, 0, 0);
       }
     });
   },

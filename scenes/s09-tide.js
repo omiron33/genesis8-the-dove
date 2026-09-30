@@ -1,7 +1,7 @@
 // 09 · "The waters kept on falling / until the tenth month."
 // Low over the flood beneath the ark's mountain. The gold tide mark slides down the rock, leaving
 // fainter rings where the water stood; the words ride down with it.
-import { keys, ease, grade, warmth, linesFrom, clean, gauge, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, gauge, clamp01, paintHere } from '/song/lib/look.js';
 import { MOUNTAIN_GLSL, MOUNTAIN_UNIFORMS } from '/song/lib/mountain.js';
 import { cameraPlane } from '/engine.js';
 
@@ -18,8 +18,7 @@ vec3 shade(vec2 fc) {
   vec3 c = mountainScene(ro, rd, jit, depth);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.2;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -44,8 +43,8 @@ vec3 shade(vec2 fc) {
         const s = clean(w.w).replace(/[;,.]+$/, '');
         const k = ease.out3((t - w.start + 0.1) / 0.4);
         const sink = ease.inOut3((t - w.end) / 2.0) * 50;
-        if (k > 0) { ctx.fillStyle = `rgba(246, 240, 230, ${k.toFixed(3)})`; ctx.fillText(s, x, y + drop + sink - (1 - k) * 40); }
-        x += ctx.measureText(s + ' ').width;
+        if (k > 0) { paintHere(ctx, s, x, y + drop + sink - (1 - k) * 40, k.toFixed(3)); }
+        x += paintHere(ctx, s, 0, 0, 0);
       }
     };
     row(L1, 200, 1420, 200, false);

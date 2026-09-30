@@ -15,8 +15,7 @@ vec3 shade(vec2 fc) {
   // title and gauge, set on a plane just in front of the lens
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.3;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,

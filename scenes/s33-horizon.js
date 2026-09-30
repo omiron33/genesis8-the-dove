@@ -1,7 +1,7 @@
 // 33 · "even from youth. / I will not strike down all life again / as I have done."
 // Down from the edge of the world to its surface: green country at sunrise, and the gold line is now
 // simply the horizon. The words are laid along it, and the line draws itself out under each one.
-import { keys, ease, grade, linesFrom, clean, clamp01, SIGNAL } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, SIGNAL, paintHere, widthHere } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -17,8 +17,7 @@ vec3 shade(vec2 fc) {
   vec3 c = groundScene(ro, rd, depth);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.0;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -39,13 +38,13 @@ vec3 shade(vec2 fc) {
       if (out <= 0 || t < L.start - 0.4) return;
       ctx.font = `${style} 170px "EB Garamond"`; ctx.fontVariantCaps = 'all-small-caps'; ctx.letterSpacing = '22px';
       const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:”]+$/, '') }));
-      const tot = ctx.measureText(ws.map((w) => w.s).join('  ')).width;
+      const tot = widthHere(ctx, ws.map((w) => w.s));
       let x = Math.max(160, 1500 - tot);
       for (const w of ws) {
         const k = ease.out3((t - w.start + 0.1) / 0.6);
         const wd = ctx.measureText(w.s).width;
         if (k > 0) {
-          ctx.fillStyle = `rgba(28, 32, 36, ${(k * out).toFixed(3)})`; ctx.fillText(w.s, x, 940);
+          paintHere(ctx, w.s, x, 940, (k * out).toFixed(3));
           ctx.fillStyle = `rgba(${SIGNAL}, ${(0.9 * k * out).toFixed(3)})`; ctx.fillRect(x, 980, wd * k, 5);
         }
         x += ctx.measureText(w.s + '  ').width;

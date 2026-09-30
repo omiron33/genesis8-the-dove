@@ -1,7 +1,7 @@
 // 19 · "Noe knew the waters had withdrawn."
 // The olive leaf, very close, lit through from behind by the evening: its midrib and veins glow.
 // The line is written along the midrib, word by word, as if the leaf itself carried the news.
-import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, widthHere, paintHere } from '/song/lib/look.js';
 
 const [L1] = linesFrom('Noe knew the waters had withdrawn');
 

@@ -2,7 +2,7 @@
 // A still, wide frame over warming water. The dove flies away from us toward the gold line of the
 // horizon until she is gone; the camera does not follow. The last line thins letter by letter into
 // the sky.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, gauge } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, gauge, paintHere, widthHere, voiceStyle } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -34,8 +34,7 @@ vec3 shade(vec2 fc) {
   }
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.15;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -60,20 +59,23 @@ vec3 shade(vec2 fc) {
         ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '0px';
         const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
         const sp = ctx.measureText(' ').width;
-        const total = ws.reduce((a, w) => a + ctx.measureText(w.s).width, 0) + sp * (ws.length - 1);
+        const total = widthHere(ctx, ws.map((w) => w.s));
         let x = 1920 - total / 2;
         let ci = 0;
         for (const w of ws) {
           const k = ease.out3((t - w.start + 0.1) / 0.45);
+          const vs = voiceStyle(w.s, px, italic);
+          ctx.font = vs.font; ctx.fontVariantCaps = vs.caps; ctx.letterSpacing = vs.track;
           for (const ch of w.s) {
             const cw = ctx.measureText(ch).width;
             // dissolve: each letter lifts and thins, one after another, after the line
             const d = dissolve ? ease.inOut3((t - (L.end + 0.6 + ci * 0.06)) / 1.4) : 0;
             const a = k * alpha * (1 - d);
-            if (a > 0.003) { ctx.fillStyle = `rgba(250, 240, 226, ${a.toFixed(3)})`; ctx.fillText(ch, x, y - d * 160); }
+            if (a > 0.003) { ctx.fillStyle = `rgba(${vs.color}, ${a.toFixed(3)})`; ctx.fillText(ch, x, y - d * 160); }
             x += cw; ci++;
           }
-          x += sp;
+          ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.fontVariantCaps = 'normal'; ctx.letterSpacing = '0px';
+          x += sp * 1.05;
         }
       };
       const hand = (L, t0) => 1 - clamp01((t - t0) / 0.5);

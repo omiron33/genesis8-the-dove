@@ -1,7 +1,7 @@
 // 17 · "He waited seven more days, / then sent the dove out again."
 // Through the open window, seven days and nights pass in the light on the timber. Seven gold marks
 // are counted beside the lyric, one for each day. Then the dove leaves through the window again.
-import { keys, ease, grade, linesFrom, clean, clamp01, annotate, dayCount, SIGNAL } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, annotate, dayCount, SIGNAL, paintHere } from '/song/lib/look.js';
 import { HOLD_GLSL, HOLD_UNIFORMS } from '/song/lib/hold.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -37,8 +37,7 @@ vec3 shade(vec2 fc) {
   }
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.2;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -65,8 +64,8 @@ vec3 shade(vec2 fc) {
         ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = `${-0.01 * px}px`;
         for (const w of L.words) {
           const s = clean(w.w).replace(/[;,.]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.4);
-          if (k > 0) { ctx.fillStyle = `rgba(250, 236, 216, ${k.toFixed(3)})`; ctx.fillText(s, x, y + (1 - k) * 30); }
-          x += ctx.measureText(s + ' ').width;
+          if (k > 0) { paintHere(ctx, s, x, y + (1 - k) * 30, k.toFixed(3)); }
+          x += paintHere(ctx, s, 0, 0, 0);
         }
       };
       row(L1, 220, 1500, 200, false);

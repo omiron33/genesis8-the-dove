@@ -1,7 +1,7 @@
 // 04 · "God sent a wind across the earth; / the waters began to fall."
 // A gust front races across the sea toward us; spray streaks through the frame. The first line
 // blows in letter by letter like spray; the second line settles, each word dropping on its sung start.
-import { keys, ease, grade, warmth, linesFrom, clean, gauge, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, gauge, clamp01, paintHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { cameraPlane } from '/engine.js';
 
@@ -43,8 +43,7 @@ vec3 shade(vec2 fc) {
   c += spray(ro, rd);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.25;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -75,8 +74,7 @@ vec3 shade(vec2 fc) {
         const k = ease.out5((t - (w.start - 0.25 + i * 0.03)) / 0.55);
         if (k > 0) {
           const j = Math.sin(i * 12.9 + w.start * 7.0);
-          ctx.fillStyle = `rgba(246, 240, 230, ${(k * (1 - clamp01((t - (L2.start + 1.8)) / 0.5))).toFixed(3)})`;
-          ctx.fillText(ch, x + (1 - k) * (700 + 300 * j), y + (1 - k) * 120 * j);
+          paintHere(ctx, ch, x + (1 - k) * (700 + 300 * j), y + (1 - k) * 120 * j, (k * (1 - clamp01((t - (L2.start + 1.8)) / 0.5))).toFixed(3));
         }
         x += cw;
       }
@@ -88,8 +86,8 @@ vec3 shade(vec2 fc) {
     L2.words.forEach((w) => {
       const s = clean(w.w).replace(/[;,.]+$/, '');
       const k = ease.out3((t - w.start + 0.1) / 0.45);
-      if (k > 0) { ctx.fillStyle = `rgba(246, 240, 230, ${k.toFixed(3)})`; ctx.fillText(s, x2, y2 - (1 - k) * 90); }
-      x2 += ctx.measureText(s + ' ').width;
+      if (k > 0) { paintHere(ctx, s, x2, y2 - (1 - k) * 90, k.toFixed(3)); }
+      x2 += paintHere(ctx, s, 0, 0, 0);
     });
     void W;
   },

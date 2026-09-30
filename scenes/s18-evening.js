@@ -1,7 +1,7 @@
 // 18 · "At evening she came back, / an olive leaf held in her beak."
 // Slow motion, low over the water in the first warm light of the film: an evening sun behind her,
 // the porcelain dove comes back, and the camera drifts round to find the olive leaf lit green.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, gauge } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, gauge, paintHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -23,8 +23,7 @@ vec3 shade(vec2 fc) {
   if (tb > 0.0 && tb < depth) c = birdShade(lp, lrd, uYaw, 0.05, uPh, 1.0, 1.0, SUN, uSunCol * 2.2, skyCol(vec3(0, 1, 0)) * 1.2, 0.0);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.2;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -42,8 +41,8 @@ vec3 shade(vec2 fc) {
       ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = `${-0.01 * px}px`;
       for (const w of L.words) {
         const s = clean(w.w).replace(/[;,.]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.45);
-        if (k > 0) { ctx.fillStyle = `rgba(44, 34, 30, ${(k * out).toFixed(3)})`; ctx.fillText(s, x, y + (1 - k) * 30); }
-        x += ctx.measureText(s + ' ').width;
+        if (k > 0) { paintHere(ctx, s, x, y + (1 - k) * 30, (k * out).toFixed(3)); }
+        x += paintHere(ctx, s, 0, 0, 0);
       }
     };
     row(L1, 200, 1760, 200, false, 1 - clamp01((t - (L2.start - 0.4)) / 0.4));

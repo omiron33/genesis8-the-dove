@@ -1,7 +1,7 @@
 // 15 · "The dove found no place to rest; / water still covered all the earth."
 // Straight down from high above: nothing but water to every edge. A tiny white dove circles over it,
 // her shadow on the swell, and the words drift apart across the water with nowhere to settle.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, project, gauge } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, project, gauge, paintHere, widthHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -40,8 +40,7 @@ vec3 shade(vec2 fc) {
   if (tb > 0.0 && tb < depth) c = birdShade(lp, lrd, uYaw, uBank, uPh, 0.0, 1.0, SUN, uSunCol * 1.5, skyCol(vec3(0, 1, 0)) * 1.1, 0.0);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.2;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -65,17 +64,17 @@ vec3 shade(vec2 fc) {
         ctx.font = `${it ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '-1px';
         const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
         const sp = ctx.measureText(' ').width;
-        const total = ws.reduce((a, w) => a + ctx.measureText(w.s).width, 0) + sp * (ws.length - 1);
+        const vw = (x) => paintHere(ctx, x, 0, 0, 0) - sp * 1.05;
+      const total = widthHere(ctx, ws.map((w) => w.s));
         let x = 1920 - total / 2;
         ws.forEach((w, i) => {
           const k = ease.out3((t - w.start + 0.1) / 0.4);
-          const wd = ctx.measureText(w.s).width;
+          const wd = vw(w.s);
           const cx = x + wd / 2 - 1920;
           const spread = 1 + 0.35 * ease.inOut3((t - L.end) / 3.0);
           const dy = 60 * Math.sin(i * 2.1 + 1.0) * ease.inOut3((t - L.end) / 3.0);
           if (k > 0) {
-            ctx.fillStyle = `rgba(246, 240, 230, ${(k * (1 - clamp01((t - (P.to - 0.5)) / 0.5))).toFixed(3)})`;
-            ctx.fillText(w.s, 1920 + cx * spread - wd / 2, y + dy);
+            paintHere(ctx, w.s, 1920 + cx * spread - wd / 2, y + dy, (k * (1 - clamp01((t - (P.to - 0.5)) / 0.5))).toFixed(3));
           }
           x += wd + sp;
         });

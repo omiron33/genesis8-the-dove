@@ -1,7 +1,7 @@
 // 26 · "Come out of the ark, / you, your wife, your sons, / and your sons' wives with you."
 // The great door lowers into a ramp and morning pours in along the floor. The words stand in the
 // doorway, cut from the dark against the green land outside, as the camera walks toward the light.
-import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
 import { HOLD_GLSL, HOLD_UNIFORMS } from '/song/lib/hold.js';
 
 const [L1, L2, L3] = linesFrom('Come out of the ark', 'you, your wife, your sons', 'and your sons');
@@ -35,12 +35,12 @@ vec3 shade(vec2 fc) {
     for (const [L, y, font] of rows) {
       ctx.font = `${font} "EB Garamond"`; ctx.letterSpacing = '-2px';
       const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:]+$/, '') }));
-      const total = ctx.measureText(ws.map((w) => w.s).join(' ')).width;
+      const total = widthHere(ctx, ws.map((w) => w.s));
       let x = (4096 - total) / 2;
       for (const w of ws) {
         const k = ease.out3((t - w.start + 0.1) / 0.4);
-        if (k > 0) { ctx.fillStyle = `rgba(0,0,0,${k.toFixed(3)})`; ctx.fillText(w.s, x, y + (1 - k) * 26); }
-        x += ctx.measureText(w.s + ' ').width;
+        if (k > 0) { paintHere(ctx, w.s, x, y + (1 - k) * 26, k.toFixed(3)); }
+        x += paintHere(ctx, w.s, 0, 0, 0);
       }
     }
   },

@@ -1,7 +1,7 @@
 // 12 · "After forty days, Noe opened / the window he had made in the ark."
 // Inside the dark hold. On "opened" the hatch swings up and a bar of daylight crosses the air to the
 // floor. The second line is carried by that light: the window projects it onto the boards.
-import { keys, ease, grade, warmth, linesFrom, clean, gauge, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, gauge, clamp01, paintHere } from '/song/lib/look.js';
 import { HOLD_GLSL, HOLD_UNIFORMS } from '/song/lib/hold.js';
 import { cameraPlane } from '/engine.js';
 
@@ -51,8 +51,8 @@ vec3 shade(vec2 fc) {
     const out = 1 - clamp01((t - (L2.start + 0.5)) / 0.8);
     for (const w of L1.words) {
       const s = clean(w.w).replace(/[;,.]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.4);
-      if (k > 0) { ctx.fillStyle = `rgba(246, 240, 230, ${(k * out).toFixed(3)})`; ctx.fillText(s, x, 420); }
-      x += ctx.measureText(s + ' ').width;
+      if (k > 0) { paintHere(ctx, s, x, 420, (k * out).toFixed(3)); }
+      x += paintHere(ctx, s, 0, 0, 0);
     }
     gauge(ctx, t, 200, 180, { alpha: 0.7 * out, size: 40 });
     // lower half (rows 2160..4320): what the window carries, white on transparent = light
@@ -65,7 +65,7 @@ vec3 shade(vec2 fc) {
       let xx = (W - total) / 2;
       ws.forEach((w, i) => {
         const k = ease.out3((t - w.start + 0.1) / 0.35);
-        if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${k.toFixed(3)})`; ctx.fillText(txt[i], xx, 950 + ri * 460); }
+        if (k > 0) { paintHere(ctx, txt[i], xx, 950 + ri * 460, k.toFixed(3)); }
         xx += ctx.measureText(txt[i] + ' ').width;
       });
     });

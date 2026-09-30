@@ -1,7 +1,7 @@
 // 36 · "none shall cease." and the close.
 // The opening sea again, now calm and warm at sunrise: the gold waterline has settled for good as the
 // horizon. The promise's last words in the sacred register, then the title, then the light goes.
-import { keys, ease, grade, linesFrom, clean, clamp01, annotate } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, annotate, paintHere, widthHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { cameraPlane } from '/engine.js';
 
@@ -17,8 +17,7 @@ vec3 shade(vec2 fc) {
   vec3 c = seaScene(ro, rd, depth);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = mix(c, vec3(0.05, 0.045, 0.045), tx.a);
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -34,11 +33,11 @@ vec3 shade(vec2 fc) {
     const out = 1 - clamp01((t - (L1.end + 2.5)) / 1.2);
     ctx.font = '500 190px "EB Garamond"'; ctx.fontVariantCaps = 'all-small-caps'; ctx.letterSpacing = '40px';
     const ws = L1.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:”]+$/, '') }));
-    const tot = ctx.measureText(ws.map((w) => w.s).join('   ')).width;
+    const tot = widthHere(ctx, ws.map((w) => w.s));
     let x = 1920 - tot / 2;
     for (const w of ws) {
       const k = ease.out3((t - w.start + 0.1) / 0.8);
-      if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${(k * out).toFixed(3)})`; ctx.fillText(w.s, x, 760); }
+      if (k > 0) { paintHere(ctx, w.s, x, 760, (k * out).toFixed(3)); }
       x += ctx.measureText(w.s + '   ').width;
     }
     ctx.fontVariantCaps = 'normal';

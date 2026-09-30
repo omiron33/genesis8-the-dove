@@ -1,7 +1,7 @@
 // 07 · "After one hundred fifty days / they had fallen; the ark came to rest,"
 // A counter rolls to 150 like the drum of a gauge while the camera rises over the calming sea and
 // the ark far below; on "rest" the counter locks and the whole frame settles.
-import { keys, ease, grade, warmth, linesFrom, clean, annotate, clamp01, SIGNAL } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, annotate, clamp01, SIGNAL, paintHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { cameraPlane } from '/engine.js';
 
@@ -18,8 +18,7 @@ vec3 shade(vec2 fc) {
   vec3 c = seaScene(ro, rd, depth);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a * 0.92) + tx.rgb * 1.2;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -69,8 +68,8 @@ vec3 shade(vec2 fc) {
       for (const w of L.words) {
         const s = clean(w.w).replace(/[;,.]+$/, '');
         const k = ease.out3((t - w.start + 0.1) / 0.4);
-        if (k > 0) { ctx.fillStyle = `rgba(246, 240, 230, ${k.toFixed(3)})`; ctx.fillText(s, x, y + (1 - k) * 30); }
-        x += ctx.measureText(s + ' ').width;
+        if (k > 0) { paintHere(ctx, s, x, y + (1 - k) * 30, k.toFixed(3)); }
+        x += paintHere(ctx, s, 0, 0, 0);
       }
     };
     row(L1, x0 + cw * 3 + 120, y0 - 380, 150, false);

@@ -1,7 +1,7 @@
 // 30 · "Noe built an altar to the Lord. / From every clean beast and bird / he offered whole burnt offerings."
 // On the new grass, in the gold of the morning, an altar of rough stones is built one stone per
 // measured beat. On "burnt offerings" the fire takes, and its first smoke begins to rise.
-import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, paintHere } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -82,10 +82,7 @@ vec3 shade(vec2 fc) {
   }
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
-    vec3 ink = mix(vec3(1.05, 1.0, 0.94), vec3(0.05, 0.045, 0.04), smoothstep(0.42, 0.52, lum));
-    c = mix(c, ink, tx.a);
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -105,8 +102,8 @@ vec3 shade(vec2 fc) {
         let x = 220;
         for (const w of L.words) {
           const s = clean(w.w).replace(/[;,.:]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.4);
-          if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${k.toFixed(3)})`; ctx.fillText(s, x, y); }
-          x += ctx.measureText(s + ' ').width;
+          if (k > 0) { paintHere(ctx, s, x, y, k.toFixed(3)); }
+          x += paintHere(ctx, s, 0, 0, 0);
         }
       }
     },

@@ -2,7 +2,7 @@
 // Stillness. A wide, low frame over the dried plain; nothing moves but the light. As "The Lord God"
 // is sung, a column of warm light stands up from the horizon, and the name arrives in the sacred
 // register: small capitals, widely spaced, slow.
-import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -23,10 +23,7 @@ vec3 shade(vec2 fc) {
   if (depth < 1e3) c += vec3(1.0, 0.8, 0.55) * exp(-abs(rd.x) * 6.0) * uRay * 0.15;
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
-    vec3 ink = mix(vec3(1.05, 1.0, 0.94), vec3(0.06, 0.045, 0.035), smoothstep(0.42, 0.52, lum));
-    c = mix(c, ink, tx.a);
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -45,8 +42,8 @@ vec3 shade(vec2 fc) {
     let x = 1920 - ctx.measureText('the earth was dry').width / 2;
     for (const w of L1.words) {
       const s = clean(w.w).replace(/[;,.]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.5);
-      if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${(k * out1).toFixed(3)})`; ctx.fillText(s, x, 1560); }
-      x += ctx.measureText(s + ' ').width;
+      if (k > 0) { paintHere(ctx, s, x, 1560, (k * out1).toFixed(3)); }
+      x += paintHere(ctx, s, 0, 0, 0);
     }
     // the sacred register: "The Lord God" in widely spaced small capitals, then the rest in italic
     const name = L2.words.slice(0, 3), rest = L2.words.slice(3);
@@ -54,18 +51,19 @@ vec3 shade(vec2 fc) {
     const txt = name.map((w) => clean(w.w)).join('  ');
     const k = ease.out3((t - name[0].start + 0.1) / 1.4);
     if (k > 0) {
-      const w = ctx.measureText(txt).width;
-      ctx.fillStyle = `rgba(255,255,255,${k.toFixed(3)})`;
-      ctx.fillText(txt, 1920 - w / 2, 560);
+      const parts = name.map((w) => clean(w.w));
+      const w = widthHere(ctx, parts) + 120 * (parts.length - 1);
+      let nx = 1920 - w / 2;
+      for (const p of parts) nx += paintHere(ctx, p, nx, 560, k.toFixed(3), p.toLowerCase() === 'the' ? '242, 196, 104' : undefined) + 120;
     }
     ctx.fontVariantCaps = 'normal';
     ctx.font = 'italic 500 160px "EB Garamond"'; ctx.letterSpacing = '0px';
     const rtxt = rest.map((w) => clean(w.w).replace(/[;,.:]+$/, ''));
-    let rx = 1920 - ctx.measureText(rtxt.join(' ')).width / 2;
+    let rx = 1920 - widthHere(ctx, rtxt) / 2;
     rest.forEach((w, i) => {
       const kk = ease.out3((t - w.start + 0.1) / 0.5);
-      if (kk > 0) { ctx.fillStyle = `rgba(255,255,255,${kk.toFixed(3)})`; ctx.fillText(rtxt[i], rx, 1560); }
-      rx += ctx.measureText(rtxt[i] + ' ').width;
+      if (kk > 0) { paintHere(ctx, rtxt[i], rx, 1560, kk.toFixed(3)); }
+      rx += paintHere(ctx, rtxt[i], 0, 0, 0);
     });
   },
 });

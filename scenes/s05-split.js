@@ -2,7 +2,7 @@
 // The lens sits exactly at the water's surface: the gold waterline wavers across the frame, the deep
 // below with its springs rising, the sky above with its clouds closing. The first line lives under
 // the water, the second in the sky, and each closes like a shutter toward the line as it ends.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { cameraPlane } from '/engine.js';
 
@@ -69,8 +69,7 @@ vec3 shade(vec2 fc) {
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
     vec2 tuv = tp.xy;
     if (s < 0.0) tuv += vec2(sin(tp.y * 40.0 + uTime * 2.0), 0.0) * 0.0015;   // a little bent under water
-    vec4 tx = texture(uText, tuv);
-    c = c * (1.0 - tx.a) + tx.rgb * (s < 0.0 ? vec3(0.62, 0.86, 0.88) : vec3(1.25));
+    c = inkOver(c, tuv);
   }
   return c;
 }`,
@@ -92,7 +91,7 @@ vec3 shade(vec2 fc) {
     const row = (L, y, size, italic, closeAt, dir) => {
       ctx.font = `${italic ? 'italic ' : ''}500 ${size}px "EB Garamond"`; ctx.letterSpacing = `${-0.01 * size}px`;
       const words = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
-      const total = ctx.measureText(words.map((w) => w.s).join(' ')).width;
+      const total = widthHere(ctx, words.map((w) => w.s));
       const close = ease.inOut3((t - closeAt) / 0.6);
       let x = (W - total) / 2;
       for (const w of words) {
@@ -101,8 +100,7 @@ vec3 shade(vec2 fc) {
         if (k > 0 && close < 0.999) {
           ctx.save();
           ctx.translate(0, H / 2); ctx.scale(1, 1 - close); ctx.translate(0, -H / 2);
-          ctx.fillStyle = `rgba(246, 240, 230, ${k.toFixed(3)})`;
-          ctx.fillText(w.s, x, y + dir * (1 - k) * 60);
+          paintHere(ctx, w.s, x, y + dir * (1 - k) * 60, k.toFixed(3));
           ctx.restore();
         }
         x += wd + ctx.measureText(' ').width;

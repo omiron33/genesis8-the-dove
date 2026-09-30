@@ -58,14 +58,8 @@
   },
   {
    "id": "10",
-   "scene": "s10-deck",
+   "scene": "s10-emerge",
    "from": 76.1167,
-   "to": 92.0333
-  },
-  {
-   "id": "11",
-   "scene": "s11-peaks",
-   "from": 92.0333,
    "to": 95.8167
   },
   {
@@ -78,37 +72,43 @@
    "id": "13",
    "scene": "s13-raven",
    "from": 103.4,
-   "to": 113.7833
+   "to": 113.7833,
+   "samples": 16
   },
   {
    "id": "14",
    "scene": "s14-dove-launch",
    "from": 113.7833,
-   "to": 121.35
+   "to": 121.35,
+   "samples": 16
   },
   {
    "id": "15",
    "scene": "s15-search",
    "from": 121.35,
-   "to": 128.4333
+   "to": 128.4333,
+   "samples": 16
   },
   {
    "id": "16",
    "scene": "s16-drew-her-in",
    "from": 128.4333,
-   "to": 139.9
+   "to": 139.9,
+   "samples": 16
   },
   {
    "id": "17",
    "scene": "s17-seven-days",
    "from": 139.9,
-   "to": 152.0667
+   "to": 152.0667,
+   "samples": 16
   },
   {
    "id": "18",
    "scene": "s18-evening",
    "from": 152.0667,
-   "to": 159.1333
+   "to": 159.1333,
+   "samples": 16
   },
   {
    "id": "19",
@@ -120,7 +120,8 @@
    "id": "20",
    "scene": "s20-departure",
    "from": 162.9167,
-   "to": 173.7833
+   "to": 173.7833,
+   "samples": 16
   },
   {
    "id": "21",
@@ -162,13 +163,15 @@
    "id": "27",
    "scene": "s27-creatures",
    "from": 228.7167,
-   "to": 238.7167
+   "to": 238.7167,
+   "samples": 16
   },
   {
    "id": "28",
    "scene": "s28-teem",
    "from": 238.7167,
-   "to": 245.5
+   "to": 245.5,
+   "samples": 16
   },
   {
    "id": "29",

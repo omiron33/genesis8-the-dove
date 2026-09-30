@@ -1,7 +1,7 @@
 // 02 · "God remembered Noe, / and every beast and bird,"
 // The words rise from under the water and settle on the surface; the camera cranes up to find the
 // ark small on the horizon.
-import { keys, ease, gauge, grade, warmth, linesFrom, setLine, clamp01 } from '/song/lib/look.js';
+import { keys, ease, gauge, grade, warmth, linesFrom, setLine, clamp01, paintHere, widthHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 
 const [L1, L2] = linesFrom('God remembered Noe', 'and every beast and bird');
@@ -54,17 +54,17 @@ vec3 shade(vec2 fc) {
       ctx.letterSpacing = `${-0.012 * size}px`;
       const words = L.words.map((w) => ({ ...w, s: w.w.replace(/[,;:.]+$/, '').replace(/'/g, '’') }));
       const sp = ctx.measureText(' ').width;
-      const total = words.reduce((a, w) => a + ctx.measureText(w.s).width, 0) + sp * (words.length - 1);
+      const vw = (x) => paintHere(ctx, x, 0, 0, 0) - sp * 1.05;
+      const total = widthHere(ctx, words.map((w) => w.s));
       let x = (4096 - total) / 2;
       for (const w of words) {
         const r = rise(w);
         if (t > w.start - 0.35) {
           // each word travels up from 0.6 m under the surface to its row
           const y = y0 + (1 - r) * (surf - y0 + size * 1.1);
-          ctx.fillStyle = `rgba(246, 240, 230, ${(0.35 + 0.65 * r).toFixed(3)})`;
-          ctx.fillText(w.s, x, y);
+          paintHere(ctx, w.s, x, y, (0.35 + 0.65 * r).toFixed(3));
         }
-        x += ctx.measureText(w.s).width + sp;
+        x += vw(w.s) + sp * 1.05;
       }
     };
     const lift = ease.inOut3((t - (L2.start - 0.4)) / 0.9);   // line 1 makes room for line 2

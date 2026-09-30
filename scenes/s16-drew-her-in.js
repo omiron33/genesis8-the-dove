@@ -2,7 +2,7 @@
 // Inside, facing the open window. The dove flies back out of the grey and lands on the sill;
 // she is drawn in from the sill, and the hatch lowers around her. A small lamp warms the timber:
 // the first warm light of the film. The words gather in from the edges and close together.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
 import { HOLD_GLSL, HOLD_UNIFORMS } from '/song/lib/hold.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -72,8 +72,7 @@ vec3 shade(vec2 fc) {
   }
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.2;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -106,16 +105,17 @@ vec3 shade(vec2 fc) {
         ctx.font = `${it ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '-1px';
         const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
         const sp = ctx.measureText(' ').width;
-        const total = ws.reduce((a, w) => a + ctx.measureText(w.s).width, 0) + sp * (ws.length - 1);
+        const vw = (x) => paintHere(ctx, x, 0, 0, 0) - sp * 1.05;
+      const total = widthHere(ctx, ws.map((w) => w.s));
         let x = 1150 - total / 2;
         ws.forEach((w, i) => {
-          const wd = ctx.measureText(w.s).width;
+          const wd = vw(w.s);
           const k = ease.out5((t - w.start + 0.1) / 0.6);
           const home = x + wd / 2;
           const from = home < 1150 ? -wd : 2600 + wd;
           const cx = from + (home - from) * k;
           const tighten = 1 - 0.12 * spread * ease.inOut3((t - (L3.end)) / 1.5);
-          if (k > 0) { ctx.fillStyle = `rgba(250, 236, 216, ${Math.min(1, k * 1.5).toFixed(3)})`; ctx.fillText(w.s, 1150 + (cx - 1150) * tighten - wd / 2, y); }
+          if (k > 0) { paintHere(ctx, w.s, 1150 + (cx - 1150) * tighten - wd / 2, y, Math.min(1, k * 1.5).toFixed(3)); }
           x += wd + sp;
         });
       }

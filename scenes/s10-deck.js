@@ -1,7 +1,7 @@
 // 10 · "On the first day of month ten," and the instrumental after it.
 // A long, slow aerial above a sea of cloud that hides the flood. The date arrives in the gauge
 // voice; through the instrumental the camera drifts toward the massif, still buried in cloud.
-import { keys, ease, grade, warmth, linesFrom, clean, annotate, gauge, clamp01, SIGNAL } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, annotate, gauge, clamp01, SIGNAL, paintHere } from '/song/lib/look.js';
 import { MOUNTAIN_GLSL, MOUNTAIN_UNIFORMS } from '/song/lib/mountain.js';
 import { cameraPlane } from '/engine.js';
 
@@ -26,8 +26,7 @@ vec3 shade(vec2 fc) {
   if (depth > 70.0) c += horizonLine(rd, uLineGlow);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -46,8 +45,8 @@ vec3 shade(vec2 fc) {
     let x = 200;
     for (const w of L1.words) {
       const s = clean(w.w).replace(/[;,.]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.45);
-      if (k > 0) { ctx.fillStyle = `rgba(30, 38, 46, ${k.toFixed(3)})`; ctx.fillText(s, x, 620 + (1 - k) * 30); }
-      x += ctx.measureText(s + ' ').width;
+      if (k > 0) { paintHere(ctx, s, x, 620 + (1 - k) * 30, k.toFixed(3)); }
+      x += paintHere(ctx, s, 0, 0, 0);
     }
     ctx.globalAlpha = 1;
     // the instrumental: the date holds in the gauge voice, the waterline under it

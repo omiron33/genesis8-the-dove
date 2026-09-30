@@ -1,7 +1,7 @@
 // 24 · "and saw the ground was dry. / In month two, on day twenty-seven,"
 // From the ark's roof the camera tilts from the horizon down onto the ground: cracked silt, drying in
 // the sun. The date is set as a ledger entry in the gauge voice, ruled with the gold line.
-import { keys, ease, grade, linesFrom, clean, clamp01, annotate, SIGNAL } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, annotate, SIGNAL, paintHere } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -17,10 +17,7 @@ vec3 shade(vec2 fc) {
   vec3 c = groundScene(ro, rd, depth);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
-    vec3 ink = mix(vec3(1.05, 1.0, 0.94), vec3(0.04, 0.035, 0.03), smoothstep(0.42, 0.52, lum));
-    c = mix(c, ink, tx.a);
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -38,8 +35,8 @@ vec3 shade(vec2 fc) {
       ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '-1px';
       for (const w of L.words) {
         const s = clean(w.w).replace(/[;,.]+$/, ''); const k = ease.out3((t - w.start + 0.1) / 0.4);
-        if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${k.toFixed(3)})`; ctx.fillText(s, x, y + (1 - k) * 30); }
-        x += ctx.measureText(s + ' ').width;
+        if (k > 0) { paintHere(ctx, s, x, y + (1 - k) * 30, k.toFixed(3)); }
+        x += paintHere(ctx, s, 0, 0, 0);
       }
     };
     row(L1, 220, 600, 230, false);

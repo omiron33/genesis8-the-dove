@@ -2,7 +2,7 @@
 // A blue morning over the green land. One bird, then two, four, a hundred: the flock doubles on the
 // beat until a murmuration fills the sky. The word "multiply" multiplies with it, filling the frame
 // in a widening field before the last line settles.
-import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -57,10 +57,7 @@ vec3 shade(vec2 fc) {
   if (depth > 1e3) c = flock(ro, rd, c);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
-    vec3 ink = mix(vec3(1.05, 1.0, 0.94), vec3(0.05, 0.05, 0.06), smoothstep(0.42, 0.52, lum));
-    c = mix(c, ink, tx.a);
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -92,12 +89,12 @@ vec3 shade(vec2 fc) {
     const row = (L, y, px, italic, alpha) => {
       ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '-1px';
       const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:”]+$/, '') }));
-      const tot = ctx.measureText(ws.map((w) => w.s).join(' ')).width;
+      const tot = widthHere(ctx, ws.map((w) => w.s));
       let x = 1920 - tot / 2;
       for (const w of ws) {
         const kk = ease.out3((t - w.start + 0.1) / 0.4);
-        if (kk > 0 && !(L === L1 && w === ws[ws.length - 1] && n > 0)) { ctx.fillStyle = `rgba(255,255,255,${(kk * alpha).toFixed(3)})`; ctx.fillText(w.s, x, y); }
-        x += ctx.measureText(w.s + ' ').width;
+        if (kk > 0 && !(L === L1 && w === ws[ws.length - 1] && n > 0)) { paintHere(ctx, w.s, x, y, (kk * alpha).toFixed(3)); }
+        x += paintHere(ctx, w.s, 0, 0, 0);
       }
     };
     row(L1, 2020, 170, false, 1 - clamp01((t - (L2.start - 0.3)) / 0.4));

@@ -1,7 +1,7 @@
 // 35 · "seedtime, harvest, cold and heat, / summer, spring, day and night—"
 // Hard cuts on the words: the same field seen in each of the seasons the promise names, one world per
 // word. The word itself stands large across its world for exactly as long as it is sung.
-import { keys, ease, grade, linesFrom, clean, clamp01, annotate } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, annotate, paintHere, widthHere } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -72,9 +72,7 @@ vec3 shade(vec2 fc) {
   }
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    vec3 ink = (s == 1 || s == 2 || s == 3 || s == 6) ? vec3(0.05, 0.045, 0.04) : vec3(1.08, 1.03, 0.96);
-    c = mix(c, ink, tx.a);
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -104,9 +102,9 @@ vec3 shade(vec2 fc) {
       const small = s.toLowerCase() === 'and';
       const k = ease.out5((t - cur.start + 0.08) / 0.25);
       ctx.font = `${small ? 'italic 500 200px' : 'italic 500 520px'} "EB Garamond"`; ctx.letterSpacing = small ? '0px' : '-6px';
-      const w = ctx.measureText(s).width;
-      ctx.fillStyle = `rgba(255,255,255,${k.toFixed(3)})`;
-      ctx.fillText(s, 1920 - w / 2, small ? 1560 : 1700);
+      const w = widthHere(ctx, [s]);
+      const inks = { seedtime: '196, 150, 98', harvest: '246, 196, 92', cold: '196, 228, 250', heat: '255, 150, 70', summer: '150, 214, 96', spring: '255, 190, 214', day: '255, 244, 206', night: '176, 196, 255' };
+      paintHere(ctx, s, 1920 - w / 2, small ? 1560 : 1700, k, inks[s.toLowerCase()]);
       // the running list of the promise, small, along the top
       const said = words.filter((w) => t >= w.start - 0.08).map((w) => clean(w.w).replace(/[;,.:—”]+$/, '').toUpperCase());
       annotate(ctx, said.join('  '), 1920, 220, { size: 40, alpha: 0.7, align: 'center', color: '255, 255, 255' });

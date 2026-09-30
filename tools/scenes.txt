@@ -7,8 +7,7 @@
 07 s07-days 54.8
 08 s08-ararat-ark 64.4
 09 s09-tide 70.6
-10 s10-deck 76.2
-11 s11-peaks 92.2
+10 s10-emerge 76.2
 12 s12-window 96.0
 13 s13-raven 103.4
 14 s14-dove-launch 113.8

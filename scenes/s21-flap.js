@@ -1,7 +1,7 @@
 // 21 · "In Noe's six hundred first year, / first month, the first day,"
 // A split-flap board over the dawn water: the year, month and day flip through their figures and lock
 // on the words that name them, and the gauge beneath reads the flood gone.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, annotate, SIGNAL } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, annotate, SIGNAL, widthHere, paintHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { cameraPlane } from '/engine.js';
 
@@ -18,8 +18,7 @@ vec3 shade(vec2 fc) {
   vec3 c = seaScene(ro, rd, depth);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.15;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -80,12 +79,12 @@ vec3 shade(vec2 fc) {
     const row = (L, yy, px, italic) => {
       ctx.font = `${italic ? 'italic ' : ''}500 ${px}px "EB Garamond"`; ctx.letterSpacing = '-1px';
       const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.]+$/, '') }));
-      const tot = ctx.measureText(ws.map((w) => w.s).join(' ')).width;
+      const tot = widthHere(ctx, ws.map((w) => w.s));
       let xx = 1920 - tot / 2;
       for (const w of ws) {
         const k = ease.out3((t - w.start + 0.1) / 0.4);
-        if (k > 0) { ctx.fillStyle = `rgba(250, 240, 226, ${k.toFixed(3)})`; ctx.fillText(w.s, xx, yy); }
-        xx += ctx.measureText(w.s + ' ').width;
+        if (k > 0) { paintHere(ctx, w.s, xx, yy, k.toFixed(3)); }
+        xx += paintHere(ctx, w.s, 0, 0, 0);
       }
     };
     row(L1, 1640, 160, false);

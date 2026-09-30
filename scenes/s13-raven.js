@@ -2,7 +2,7 @@
 // From just off the ark's side, a black obsidian raven beats away low over the grey water toward the
 // horizon. Each word is left hanging where the bird was when it was sung, a wake of words that thins
 // and fades as the raven becomes a speck and is gone.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, project } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, project, paintHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -41,8 +41,7 @@ vec3 shade(vec2 fc) {
   }
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.2;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -60,6 +59,7 @@ vec3 shade(vec2 fc) {
     drawText(ctx, t) {
       const cam = camera(t);
       ctx.letterSpacing = '-1px';
+      const lineEnd = [-1e9, -1e9, -1e9];
       for (const w of words) {
         const k = ease.out3((t - w.start + 0.05) / 0.35);
         if (k <= 0) continue;
@@ -70,8 +70,9 @@ vec3 shade(vec2 fc) {
         const size = Math.max(70, Math.min(300, 1700 / s.z));
         const fade = w.li === 2 ? 1 - clamp01((t - (w.end + 0.4)) / 1.4) : 1 - clamp01((t - (lines[w.li].end + 1.6)) / 1.2);
         ctx.font = `${w.li === 1 ? 'italic ' : ''}500 ${size.toFixed(0)}px "EB Garamond"`;
-        ctx.fillStyle = `rgba(246, 240, 230, ${(k * fade).toFixed(3)})`;
-        ctx.fillText(clean(w.w).replace(/[;,.]+$/, ''), s.x, s.y);
+        // never let a word run into the one before it on its line
+        const x = Math.max(s.x, lineEnd[w.li] + size * 0.35);
+        lineEnd[w.li] = x + paintHere(ctx, clean(w.w).replace(/[;, .]+$/, ''), x, s.y, (k * fade).toFixed(3)) - size * 0.3;
       }
     },
   };

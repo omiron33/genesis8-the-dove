@@ -1,7 +1,7 @@
 // 14 · "Then he sent a dove to learn / if waters had withdrawn from earth."
 // Slow motion beside the dark hull: a porcelain-white dove leaves the window and beats out over the
 // grey water. Each word opens like a wing as it is sung, pivoting out from its folded edge.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, paintHere } from '/song/lib/look.js';
 import { SEA_GLSL, SEA_UNIFORMS } from '/song/lib/sea.js';
 import { BIRD_GLSL } from '/song/lib/bird.js';
 import { cameraPlane } from '/engine.js';
@@ -33,8 +33,7 @@ vec3 shade(vec2 fc) {
   if (tb > 0.0 && tb < depth) c = birdShade(lp, lrd, uYaw, uBank, uPh, 0.0, 1.0, SUN, uSunCol * 1.5, skyCol(vec3(0, 1, 0)) * 1.1, 0.0);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.2;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -62,8 +61,7 @@ vec3 shade(vec2 fc) {
             ctx.save();
             ctx.translate(x, y);
             ctx.transform(Math.max(0.02, k), (1 - k) * -0.35, 0, 1, 0, 0);
-            ctx.fillStyle = `rgba(246, 240, 230, ${Math.min(1, k * 1.4).toFixed(3)})`;
-            ctx.fillText(s, 0, 0);
+            paintHere(ctx, s, 0, 0, Math.min(1, k * 1.4).toFixed(3));
             ctx.restore();
           }
           x += wd + ctx.measureText(' ').width;

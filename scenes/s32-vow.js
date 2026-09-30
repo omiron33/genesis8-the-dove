@@ -2,7 +2,7 @@
 // The whole earth from far above at sunrise: its curve, the thin atmosphere lit gold along the limb
 // (the waterline become the edge of the world), land and sea below with no flood on them. God's
 // words are set in the sacred register, one line at a time, slow and wide.
-import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
 import { cameraPlane } from '/engine.js';
 
 const [L1, L2, L3] = linesFrom('I will not curse the earth', 'for what humanity has done', 'The human heart leans');
@@ -63,8 +63,7 @@ vec3 shade(vec2 fc) {
   }
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    col = mix(col, vec3(1.08, 1.03, 0.96), tx.a);
+    col = inkOver(col, tp.xy);
   }
   return col;
 }`,
@@ -84,11 +83,11 @@ vec3 shade(vec2 fc) {
       if (out <= 0 || t < L.start - 0.4) return;
       ctx.font = '500 150px "EB Garamond"'; ctx.fontVariantCaps = 'all-small-caps'; ctx.letterSpacing = '26px';
       const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:“”]+$/, '').replace(/^“/, '') }));
-      const tot = ctx.measureText(ws.map((w) => w.s).join('  ')).width;
+      const tot = widthHere(ctx, ws.map((w) => w.s));
       let x = 1920 - tot / 2;
       for (const w of ws) {
         const k = ease.out3((t - w.start + 0.1) / 0.8);
-        if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${(k * out).toFixed(3)})`; ctx.fillText(w.s, x, 560); }
+        if (k > 0) { paintHere(ctx, w.s, x, 560, (k * out).toFixed(3)); }
         x += ctx.measureText(w.s + '  ').width;
       }
       ctx.fontVariantCaps = 'normal';

@@ -2,7 +2,7 @@
 // A fast, low flight over the land as it surfaces: the flood drains away in every valley, the gold
 // tide lines racing down the slopes after it, the first green coming up behind. "earth" arrives
 // huge and holds while the sun breaks through.
-import { keys, ease, grade, warmth, linesFrom, clean, clamp01, gauge } from '/song/lib/look.js';
+import { keys, ease, grade, warmth, linesFrom, clean, clamp01, gauge, paintHere } from '/song/lib/look.js';
 import { MOUNTAIN_GLSL, MOUNTAIN_UNIFORMS } from '/song/lib/mountain.js';
 import { HORIZON_GLSL } from '/song/scenes/s10-deck.js';
 import { cameraPlane } from '/engine.js';
@@ -23,8 +23,7 @@ vec3 shade(vec2 fc) {
   if (depth > 70.0) c += horizonLine(rd, uLineGlow);
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = c * (1.0 - tx.a) + tx.rgb * 1.2;
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -50,8 +49,8 @@ vec3 shade(vec2 fc) {
     let x = 200;
     for (const w of pre) {
       const s = clean(w.w); const k = ease.out3((t - w.start + 0.1) / 0.4);
-      if (k > 0) { ctx.fillStyle = `rgba(250, 244, 234, ${k.toFixed(3)})`; ctx.fillText(s, x, 1980); }
-      x += ctx.measureText(s + ' ').width;
+      if (k > 0) { paintHere(ctx, s, x, 1980, k.toFixed(3)); }
+      x += paintHere(ctx, s, 0, 0, 0);
     }
     // "earth": set very large, low, widening its tracking through the held note
     const k = ease.out3((t - earth.start + 0.1) / 0.6);
@@ -60,8 +59,7 @@ vec3 shade(vec2 fc) {
       ctx.font = 'italic 500 620px "EB Garamond"'; ctx.letterSpacing = `${track}px`;
       const s = clean(earth.w).replace(/[.]+$/, '');
       const w = ctx.measureText(s).width;
-      ctx.fillStyle = `rgba(250, 244, 234, ${k.toFixed(3)})`;
-      ctx.fillText(s, 1920 - w / 2, 1380 + (1 - k) * 60);
+      paintHere(ctx, s, 1920 - w / 2, 1380 + (1 - k) * 60, k.toFixed(3));
     }
   },
 });

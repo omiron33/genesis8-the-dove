@@ -1,7 +1,7 @@
 // 31 · "The Lord God received the pleasing scent / and said within himself:"
 // The smoke of the offering climbs into a high, clear sky, and the camera tilts up with it. The words
 // rise inside the smoke, the name in the sacred register, thinning as they go up.
-import { keys, ease, grade, linesFrom, clean, clamp01 } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, paintHere, widthHere } from '/song/lib/look.js';
 import { GROUND_GLSL, GROUND_UNIFORMS } from '/song/lib/ground.js';
 import { cameraPlane } from '/engine.js';
 
@@ -46,8 +46,7 @@ vec3 shade(vec2 fc) {
   c = c * T + L;
   vec3 tp = planeUV(ro, rd, uTxC, uTxX, uTxY, uTxHS);
   if (tp.z > 0.0 && all(greaterThan(tp.xy, vec2(0))) && all(lessThan(tp.xy, vec2(1)))) {
-    vec4 tx = texture(uText, tp.xy);
-    c = mix(c, vec3(1.08, 1.03, 0.96), tx.a);
+    c = inkOver(c, tp.xy);
   }
   return c;
 }`,
@@ -64,14 +63,14 @@ vec3 shade(vec2 fc) {
       ctx.font = `${style} ${px}px "EB Garamond"`; ctx.fontVariantCaps = caps ? 'all-small-caps' : 'normal';
       ctx.letterSpacing = caps ? '40px' : '-1px';
       const ws = L.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:]+$/, '') }));
-      const tot = ctx.measureText(ws.map((w) => w.s).join(' ')).width;
+      const tot = widthHere(ctx, ws.map((w) => w.s));
       let x = 1920 - tot / 2;
       for (const w of ws) {
         const k = ease.out3((t - w.start + 0.1) / 0.6);
         const rise = Math.max(0, t - w.start) * 55;
         const fade = 1 - clamp01((t - (w.end + 3.0)) / 2.0);
-        if (k > 0) { ctx.fillStyle = `rgba(255,255,255,${(k * fade).toFixed(3)})`; ctx.fillText(w.s, x, y0 - rise); }
-        x += ctx.measureText(w.s + ' ').width;
+        if (k > 0) { paintHere(ctx, w.s, x, y0 - rise, (k * fade).toFixed(3)); }
+        x += paintHere(ctx, w.s, 0, 0, 0);
       }
       ctx.fontVariantCaps = 'normal';
     };

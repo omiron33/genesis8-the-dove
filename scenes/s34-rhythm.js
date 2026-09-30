@@ -1,7 +1,7 @@
 // 34 · (instrumental) "All earth's days shall keep their rhythm:"
 // A single olive tree on a green hill, still, while days pass over it on the beat: the sun wheels
 // across and down, night falls with its stars, dawn comes again. The line is set to the same pulse.
-import { keys, ease, grade, linesFrom, clean, clamp01, annotate } from '/song/lib/look.js';
+import { keys, ease, grade, linesFrom, clean, clamp01, annotate, widthHere, paintHere } from '/song/lib/look.js';
 import { cameraPlane } from '/engine.js';
 
 const audio = await fetch('/song/data/audio.json').then((r) => r.json());
@@ -68,10 +68,30 @@ vec3 shade(vec2 fc) {
   float dm = length(uv - moon);
   c += vec3(0.8, 0.85, 0.95) * (smoothstep(0.03, 0.025, dm) * 2.0 + exp(-dm * 12.0) * 0.1) * (1.0 - dayL);
   // the hill and the tree, in silhouette with the sky's rim light
-  float h = hill(uv.x) + 0.012 * pow(fbm(vec2(uv.x * 160.0, 0.0), 3), 2.0);
-  if (uv.y < h) {
-    vec3 g = mix(vec3(0.01, 0.012, 0.01), vec3(0.12, 0.2, 0.06), dayL);
-    c = g * (0.8 + 0.2 * fbm(uv * 40.0, 3));
+  float h = hill(uv.x);
+  // grass blades standing along the ridge: thin tapering spikes, swaying a little
+  float bx = uv.x * 260.0;
+  float bid = floor(bx), bf = fract(bx) - 0.5;
+  float bh = (0.006 + 0.02 * pow(hash11(bid), 2.0)) * (0.6 + 0.4 * fbm(vec2(uv.x * 3.0, 2.0), 2));
+  float lean = (hash11(bid + 7.0) - 0.5) * 0.6 + 0.15 * sin(uTime * 1.3 + uv.x * 4.0);
+  float by = (uv.y - h) / bh;
+  float blade = (by > 0.0 && by < 1.0) ? step(abs(bf - lean * by), 0.18 * (1.0 - by)) : 0.0;
+  float hh = h + 0.004 * fbm(vec2(uv.x * 90.0, 0.0), 3);
+  if (uv.y < hh || blade > 0.0) {
+    float depthK = sat((hh - uv.y) / 0.5);                    // lower on screen = nearer
+    vec2 gp = vec2(uv.x * (6.0 + 30.0 * depthK), uv.y * 40.0);
+    // clumps, blade streaks and patches of light through the meadow
+    float clump = fbm(gp * 0.7, 4);
+    float streak = vnoise(vec2(uv.x * (400.0 + 900.0 * depthK), uv.y * 30.0));
+    vec3 gDay = mix(vec3(0.07, 0.13, 0.03), vec3(0.28, 0.36, 0.08), clump);
+    gDay = mix(gDay, vec3(0.42, 0.44, 0.16), smoothstep(0.65, 0.9, fbm(gp * 0.25 + 3.0, 3)) * 0.5);   // dry seed heads
+    gDay *= 0.7 + 0.45 * streak;
+    gDay *= 0.75 + 0.35 * smoothstep(0.0, 0.2, hh - uv.y + 0.05 * clump);                          // shade below the crest
+    // warm rim where the low sun grazes the crest at dawn and dusk
+    gDay += vec3(1.0, 0.55, 0.2) * dusk * exp(-(hh - uv.y) * 60.0) * 0.5;
+    vec3 gNight = vec3(0.008, 0.012, 0.02) * (0.7 + 0.5 * streak);
+    c = mix(gNight, gDay, dayL);
+    c = mix(c, skyHor * 0.6, (1.0 - depthK) * 0.15 * dayL);                                           // a little haze on the far slope
   }
   float td = tree(uv);
   float pw = 1.5 * 2.4 / uRes.y;
@@ -81,8 +101,7 @@ vec3 shade(vec2 fc) {
   // the gold line: the horizon's rim of light at dawn and dusk
   c += vec3(1.0, 0.62, 0.2) * exp(-abs(uv.y - h) * uRes.y * 0.15) * (0.3 + 1.5 * dusk) * step(h, uv.y + 0.01);
   vec2 tuv = vec2(fc.x / uRes.x, fc.y / uRes.y);
-  vec4 tx = texture(uText, tuv);
-  c = c * (1.0 - tx.a) + tx.rgb * 1.1;
+  c = inkOver(c, tuv);
   return c;
 }`,
     uniforms: { uDay: 0 },
@@ -92,12 +111,12 @@ vec3 shade(vec2 fc) {
     drawText(ctx, t) {
       ctx.font = '500 200px "EB Garamond"'; ctx.letterSpacing = '-1px';
       const ws = L1.words.map((w) => ({ ...w, s: clean(w.w).replace(/[;,.:]+$/, '') }));
-      const tot = ctx.measureText(ws.map((w) => w.s).join(' ')).width;
+      const tot = widthHere(ctx, ws.map((w) => w.s));
       let x = 1920 - tot / 2;
       for (const w of ws) {
         const k = ease.out3((t - w.start + 0.1) / 0.4);
-        if (k > 0) { ctx.fillStyle = `rgba(255, 246, 232, ${k.toFixed(3)})`; ctx.fillText(w.s, x, 1880); }
-        x += ctx.measureText(w.s + ' ').width;
+        if (k > 0) { paintHere(ctx, w.s, x, 1880, k.toFixed(3)); }
+        x += paintHere(ctx, w.s, 0, 0, 0);
       }
       // the days counted in the gauge voice as they pass
       const d = Math.max(0, Math.floor((t - b0) / period));
