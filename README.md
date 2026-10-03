@@ -4,6 +4,10 @@ Scenes for a lyric film of *Genesis 8, The Dove*, drawn entirely in code. There 
 or photographic images: every frame is a raymarched GPU shader (terrain, cloud, water, timber,
 feathers) with one sun, soft shadows and light in the air, rendered at 1920×1080 and 60 fps.
 
+Built with the Ark engine: https://github.com/omiron33/ark-video-studio
+
+Listen and watch: [technochristianity.com/music](https://technochristianity.com/music) · [TechnoChristianity on YouTube](https://www.youtube.com/@technochristianity)
+
 The renderer itself is a separate lyric film engine (not public); it averages many jittered
 sub-frames per frame for motion blur and anti-aliasing and adds one shared film finish. This
 repository holds only what belongs to this song:
